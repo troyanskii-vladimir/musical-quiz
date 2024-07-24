@@ -10,3 +10,9 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum SocketHandlers {
+  createGame = 'create-game',
+  joinGame = 'join-game',
+  test = 'test',
+}
