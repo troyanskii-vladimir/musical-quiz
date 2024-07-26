@@ -16,3 +16,19 @@ export enum SocketHandlers {
   joinGame = 'join-game',
   test = 'test',
 }
+
+export enum SliceName {
+  Auth = 'Auth',
+}
+
+export enum ApiRoute {
+  Register = 'api/register',
+  Login = 'api/login',
+  Logout = 'api/logout',
+  Refresh = 'api/refresh',
+  Users = 'api/users',
+}
+
+export const AUTH_TOKEN_NAME = 'musical-quiz-token';
+export const BACKEND_URL = 'http://localhost:3000/';
+export const REQUEST_TIMEOUT = 5000;
