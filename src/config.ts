@@ -1,8 +1,8 @@
 export enum AppRoute {
   Main = '/',
-  Lobby = '/lobby',
-  Profile = '/profile',
-  Game = '/game',
+  Play = '/play',
+  Register = '/register',
+  Login = '/login',
 }
 
 export enum AuthorizationStatus {
