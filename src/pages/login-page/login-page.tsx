@@ -1,14 +1,15 @@
 import { ChangeEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useAppDispatch } from '../../hooks';
-import { loginAction, registerAction } from '../../store/api-actions';
+import { guestLoginAction, loginAction, registerAction } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../config';
 
 import Header from '../../components/header/header';
 
 import '../../../styles/container.scss';
 import './login-page.scss';
-import { FormStatus } from './config';
-import { useNavigate } from 'react-router-dom';
+
 
 
 type RegisterPageProps = {
@@ -88,20 +89,16 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
   }
 
   const handleGuestLoginButtonClick = async () => {
-    // const res = await dispatch(registerAction({
-    //   email,
-    //   password,
-    // }));
+    const res = await dispatch(guestLoginAction({
+      userName: guestName,
+    }));
 
-    // if (res.payload) {
-    //   navigate(AppRoute.Play);
-    //   setEmail('');
-    //   setUserName('');
-    //   setPassword('');
-    // } else {
-    //   setLoginError('Ошибка регистрации');
-    //   setPassword('');
-    // }
+    if (res.payload) {
+      navigate(AppRoute.Play);
+      setGuestName('');
+    } else {
+      setLoginError('Ошибка регистрации');
+    }
   }
 
 

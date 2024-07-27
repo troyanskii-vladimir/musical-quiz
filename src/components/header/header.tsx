@@ -59,6 +59,12 @@ export default function Header({authorizationStatus}: HeaderProps) {
             </Link>
           }
           {
+            authorizationStatus === AuthorizationStatus.Guest &&
+            <Link className="header__login-link" to={AppRoute.Register}>
+              <span>{userData.userName}</span>
+            </Link>
+          }
+          {
             authorizationStatus === AuthorizationStatus.Auth &&
             <div className="header__login-link">
               <span>{userData.email}</span>

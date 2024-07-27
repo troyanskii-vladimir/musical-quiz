@@ -2,6 +2,7 @@ import { UserData } from './user-data';
 
 
 export type AuthData = {
+  userName?: string,
   email: string,
   password: string,
 }

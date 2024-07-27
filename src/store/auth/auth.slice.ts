@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, SliceName } from '../../config';
-import { checkAuthAction, getUsersAction, loginAction, logoutAction, registerAction } from '../api-actions';
+import { checkAuthAction, getUsersAction, guestLoginAction, loginAction, logoutAction, registerAction } from '../api-actions';
 import { UserData } from '../../types/user-data';
 
 const initialState = {
@@ -15,15 +15,23 @@ export const authProccess = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      // .addCase(getAuthDataAction.pending, (state) => {
-      //   state.authorizationStatus = AuthorizationStatus.Unknown;
-      //   state.userData = {} as UserData;
-      // })
       .addCase(checkAuthAction.fulfilled, (state, action) => {
-        state.authorizationStatus = AuthorizationStatus.Auth;
+        if (!action.payload.user.email) {
+          state.authorizationStatus = AuthorizationStatus.Guest;
+        } else {
+          state.authorizationStatus = AuthorizationStatus.Auth;
+        }
         state.userData = action.payload.user;
       })
       .addCase(checkAuthAction.rejected, (state) => {
+        state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.userData = {} as UserData;
+      })
+      .addCase(guestLoginAction.fulfilled, (state, action) => {
+        state.authorizationStatus = AuthorizationStatus.Guest;
+        state.userData = action.payload.user;
+      })
+      .addCase(guestLoginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.userData = {} as UserData;
       })

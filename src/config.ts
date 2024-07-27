@@ -25,11 +25,15 @@ export enum SliceName {
 export enum ApiRoute {
   Register = 'api/register',
   Login = 'api/login',
+  GuestLogin = 'api/guestlogin',
   Logout = 'api/logout',
   Refresh = 'api/refresh',
+  GuestRefresh = 'api/guestrefresh',
   Users = 'api/users',
 }
 
 export const AUTH_TOKEN_NAME = 'musical-quiz-token';
+export const GUEST_TOKEN_NAME = 'musical-quiz-guest-token';
+
 export const BACKEND_URL = 'http://localhost:3000/';
 export const REQUEST_TIMEOUT = 5000;
