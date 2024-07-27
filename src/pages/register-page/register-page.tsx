@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getUsersAction, logoutAction, registerAction } from "../../store/api-actions";
-import { AuthorizationStatus } from "../../config";
-import { getAllUsers } from "../../store/auth/auth.selectors";
+import { useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { loginAction, registerAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../config';
+
+import Header from '../../components/header/header';
+
+import '../../../styles/container.scss';
+import './register-page.scss';
 
 
 type RegisterPageProps = {
@@ -16,97 +20,83 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  // const [users, setUsers] = useState<UserData[]>([]);
-  const users = useAppSelector(getAllUsers);
-
-
-  const handleRegisterButtonClick = async () => {
-    const res = await dispatch(registerAction({
+  const handleLoginButtonClick = async () => {
+    await dispatch(loginAction({
       email,
       password,
     }));
-
-    console.log(res);
   }
 
-  const handleLogoutButtonClick = async () => {
-    await dispatch(logoutAction());
-  }
-
-  const handleGetUsersButtonClick = async () => {
-    dispatch(getUsersAction());
+  const handleRegisterButtonClick = async () => {
+    await dispatch(registerAction({
+      email,
+      password,
+    }));
   }
 
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return (
-      <div>
-        Загрузка
-      </div>
+      <main className='main'>
+        <Header authorizationStatus={authorizationStatus} />
+        Регистрация
+        <p>Loading///</p>
+      </main>
     );
   }
 
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return (
-      <div>
-        Регистер
+      <main className='main'>
+        <Header authorizationStatus={authorizationStatus} />
+        Регистрация
         <p>{authorizationStatus}</p>
-        <button
-          onClick={handleLogoutButtonClick}
-        >
-          Выйти
-        </button>
-        <button
-          onClick={handleGetUsersButtonClick}
-        >
-          Получить пользователей список
-        </button>
-        {
-          users.map((user) => (
-            <p key={user.id}>{user.email}</p>
-          ))
-        }
-      </div>
+      </main>
     );
   }
 
 
   return (
-    <div>
-      Регистер
-      <p>{authorizationStatus}</p>
-
-      <input
-        type="text"
-        value={email}
-        onChange={(evt) => setEmail(evt.target.value)}
-      />
-
-      <input
-        type="text"
-        value={password}
-        onChange={(evt) => setPassword(evt.target.value)}
-      />
-
-      <button
-        type="submit"
-        onClick={handleRegisterButtonClick}
-      >
+    <div className='register-page'>
+      <Header authorizationStatus={authorizationStatus} />
+      <main className='main-container'>
         Регистрация
-      </button>
-      <button
-          onClick={handleGetUsersButtonClick}
+        <p>{authorizationStatus}</p>
+
+        <input
+          className='input'
+          type='text'
+          value={email}
+          placeholder='Email'
+          onChange={(evt) => setEmail(evt.target.value)}
+        />
+
+        <input
+          className='input'
+          type='text'
+          value={password}
+          placeholder='Пароль'
+          onChange={(evt) => setPassword(evt.target.value)}
+        />
+
+        <button
+          className='btn'
+          type='submit'
+          onClick={handleLoginButtonClick}
         >
-          Полукчить пользователей список
+          Вход
         </button>
-        {
-          users.map((user, i) => (
-            <div key={user.id + i}>
-              {user.email}
-            </div>
-          ))
-        }
+
+        <button
+          className='btn'
+          type='submit'
+          onClick={handleRegisterButtonClick}
+        >
+          Регистрация
+        </button>
+
+      </main>
     </div>
   );
 }

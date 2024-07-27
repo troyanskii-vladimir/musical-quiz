@@ -1,0 +1,17 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+@import '../../../styles/normalize.css';
+
+
+.register-page {
+  background-color: #999;
+}
+
+.input {
+  border: 2px solid red;
+}
+
+.btn {
+  border: 2px solid black;
+  background-color: red;
+}

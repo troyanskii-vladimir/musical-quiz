@@ -31,7 +31,7 @@ export default function App(): JSX.Element {
 
           <Route
             path={AppRoute.Main}
-            element={<MainPage />}
+            element={<MainPage authorizationStatus={authorizationStatus} />}
           />
 
           <Route

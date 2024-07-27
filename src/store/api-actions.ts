@@ -20,6 +20,7 @@ export const getAuthDataAction = createAsyncThunk<AuthResponse, undefined, {
   }
 )
 
+
 export const checkAuthAction = createAsyncThunk<AuthResponse, undefined, {
   dispatch: AppDispatch,
   state: State,
@@ -31,24 +32,11 @@ export const checkAuthAction = createAsyncThunk<AuthResponse, undefined, {
       withCredentials: true,
     });
 
-    console.log('dadad')
     saveToken(data.accessToken);
     return data;
   }
 )
 
-// export const checkAuthAction = async () => {
-//   try {
-//     const {data} = await axios.get<AuthResponse>(BACKEND_URL + ApiRoute.Refresh, {
-//       withCredentials: true,
-//     });
-//     console.log('dadad')
-//     saveToken(data.accessToken);
-//     return data;
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
 
 export const registerAction = createAsyncThunk<AuthResponse, Partial<AuthData>, {
   dispatch: AppDispatch,

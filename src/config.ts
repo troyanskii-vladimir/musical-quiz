@@ -7,6 +7,7 @@ export enum AppRoute {
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
+  Guest = 'GUEST',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
