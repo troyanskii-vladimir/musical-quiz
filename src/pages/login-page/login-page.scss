@@ -1,0 +1,141 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+@import '../../../styles/normalize.css';
+
+
+.register-page {
+  background-color: #999;
+  height: 100vh;
+}
+
+.input {
+  border: 2px solid red;
+}
+
+.btn {
+  border: 2px solid black;
+  background-color: red;
+}
+
+
+
+.wrapper {
+  width: 100%;
+
+  margin-top: 100px;
+  margin-bottom: 100px;
+
+  display: flex;
+  justify-content: space-evenly;
+
+}
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  width: 40%;
+
+  padding: 20px;
+
+  background-color: white;
+
+
+  .title-container {
+
+    text-align: center;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 30px;
+  }
+
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 20px;
+
+
+    .input-name {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 20px;
+    }
+
+
+    .input-input {
+
+      height: 40px;
+      margin-top: 5px;
+      padding: 5px;
+
+      border: 1px solid #999;
+
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 18px;
+
+      &::placeholder {
+        color: #999;
+      }
+    }
+  }
+
+
+  .button-container {
+    margin-top: 20px;
+
+
+    .button {
+      display: block;
+      width: 100%;
+      height: 40px;
+
+      background-color: $color-primary-100;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &:active {
+        background-color: #999;
+        opacity: 0.8;
+      }
+    }
+
+    .button-support {
+      background-color: white;
+
+      border: 3px solid $color-primary-100;
+
+      &:hover {
+        background-color: rgba($color-primary-100, 0.1);
+        border-color: rgba($color-primary-100, 0.1);
+      }
+
+      &:active {
+        background-color: #999;
+        opacity: 0.8;
+      }
+    }
+
+    .button-error {
+      position: absolute;
+
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 18px;
+      color: orangered;
+    }
+
+    .button-text {
+      margin-top: 30px;
+
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 18px;
+    }
+  }
+}
