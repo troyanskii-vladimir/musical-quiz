@@ -35,7 +35,7 @@ export default function Header({authorizationStatus}: HeaderProps) {
           <nav className="main-nav">
             <ul className="main-nav__list">
               <li className="main-nav__item">
-                <Link className="main-nav__link" to={AppRoute.Main}>
+                <Link className="main-nav__link" to={AppRoute.Play}>
                   Играть
                 </Link>
               </li>
