@@ -1,6 +1,14 @@
 import { io } from 'socket.io-client';
-import { AuthorizationStatus, SocketHandlers } from '../../config';
+import { AuthorizationStatus, ScreenState } from '../../config';
 import Header from '../../components/header/header';
+
+
+import '../../../styles/container.scss';
+import './play-page.scss';
+import ScreenSelectGame from '../../components/screen-select-game/screen-select-game';
+import { useState } from 'react';
+import ScreenCreateGame from '../../components/screen-create-game/screen-create-game';
+import ScreenEnterGame from '../../components/screen-enter-game/screen-enter-game';
 
 
 
@@ -14,49 +22,32 @@ type PlayPageProps = {
 
 export default function PlayPage({authorizationStatus}: PlayPageProps) {
 
-  socket.on('connect', () => {
-    console.log('Gratz');
-  })
+  // socket.on('connect', () => {
+  //   console.log('Gratz');
+  // })
 
-  const handleCreateRoomButton = () => {
-    const data = { name: 'test' };
-    socket.emit(SocketHandlers.createGame, data, (response: Response) => {
-      console.log(response.status);
-    })
-  }
+  const [screenState, setScreenState] = useState<ScreenState>(ScreenState.SelectMode);
 
-  const handleEnterRoomButton = () => {
 
-  }
-
-  const handleTestButton = () => {
-    socket.emit(SocketHandlers.test);
-  }
 
   return (
-    <div>
+    <div className='play-page'>
       <Header authorizationStatus={authorizationStatus} />
       <main className='main-container'>
-        Игра
-
-        <button
-          onClick={handleCreateRoomButton}
-        >
-          Создать комнату
-        </button>
-
-        <button
-          onClick={handleEnterRoomButton}
-        >
-          Войти в комнату
-        </button>
-
-        <button
-          onClick={handleTestButton}
-        >
-          Тест
-        </button>
-
+        <div className="wrapper">
+          {
+            screenState === ScreenState.SelectMode &&
+            <ScreenSelectGame socket={socket} setScreenState={setScreenState} />
+          }
+          {
+            screenState === ScreenState.CreateRoom &&
+            <ScreenCreateGame socket={socket} setScreenState={setScreenState} />
+          }
+          {
+            screenState === ScreenState.EnterRoom &&
+            <ScreenEnterGame socket={socket} setScreenState={setScreenState} />
+          }
+        </div>
       </main>
     </div>
   );

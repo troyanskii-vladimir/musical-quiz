@@ -1,0 +1,176 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+@import '../../../../styles/normalize.css';
+
+
+.room-item {
+  width: 100%;
+  height: 100px;
+  position: relative;
+
+  margin-top: 20px;
+
+  border: 1px solid #999;
+
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 0px 13px 0px rgba(34, 60, 80, 0.2);
+  }
+}
+
+.password-open {
+  cursor: default;
+  box-shadow: 0px 0px 13px 0px rgba(34, 60, 80, 0.2);
+}
+
+
+.room-status {
+  width: 100%;
+  height: 30px;
+
+  padding: 6px;
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.ingame {
+  background-color: $color-primary-100;
+}
+
+.waiting {
+  background-color: greenyellow;
+}
+
+.lock-block {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+
+  background-color: #999;
+
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-style: 20px;
+  line-height: 20px;
+
+  span {
+    display: block;
+  }
+}
+
+.password-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+
+  padding: 10px;
+
+  background-color: white;
+
+  .password-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: block;
+    height: 25px;
+    width: 60px;
+
+    background-color: rgba($color-primary-100, 0.7);
+
+    text-align: center;
+
+    &:hover {
+      background-color: rgba($color-primary-100, 0.4);
+    }
+
+    &:active {
+      background-color: #666;
+    }
+  }
+
+  .password-text {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .password-container {
+    width: calc(70% - 10px);
+    height: 40px;
+
+    .password-input {
+      height: 40px;
+      width: 100%;
+
+      padding: 5px;
+
+      border: 1px solid #999;
+
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 18px;
+
+      &::placeholder {
+        color: #999;
+      }
+    }
+  }
+
+  .password-btn {
+    display: block;
+    width: calc(30% - 10px);
+    height: 40px;
+
+    background-color: #999;
+
+    text-align: center;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+
+    &:hover {
+      background-color: rgba(#999, 0.7);
+    }
+
+    &:active {
+      background-color: #333;
+    }
+  }
+}
+
+
+.room-info {
+  padding: 6px;
+
+
+  .room-name {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .room-players {
+    margin-top: 5px;
+
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+  }
+}

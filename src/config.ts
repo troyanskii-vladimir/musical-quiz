@@ -12,10 +12,23 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum ScreenState {
+  SelectMode = 'selectMode',
+  CreateRoom = 'createRoom',
+  EnterRoom = 'enterRoom',
+  // PlayRoom = 'playRoom',
+}
+
 export enum SocketHandlers {
   createGame = 'create-game',
   joinGame = 'join-game',
+  quizJoinGame = 'quiz-join-game',
   test = 'test',
+}
+
+export enum RoomStatus {
+  InGame = 'InGame',
+  Waiting = 'Waiting',
 }
 
 export enum SliceName {
