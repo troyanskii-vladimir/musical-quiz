@@ -9,6 +9,7 @@ import ScreenSelectGame from '../../components/screen-select-game/screen-select-
 import { useState } from 'react';
 import ScreenCreateGame from '../../components/screen-create-game/screen-create-game';
 import ScreenEnterGame from '../../components/screen-enter-game/screen-enter-game';
+import ScreenMainGame from '../../components/screen-main-game/screen-main-game';
 
 
 
@@ -22,9 +23,9 @@ type PlayPageProps = {
 
 export default function PlayPage({authorizationStatus}: PlayPageProps) {
 
-  // socket.on('connect', () => {
-  //   console.log('Gratz');
-  // })
+  socket.on('connect', () => {
+    console.log('Gratz');
+  })
 
   const [screenState, setScreenState] = useState<ScreenState>(ScreenState.SelectMode);
 
@@ -46,6 +47,10 @@ export default function PlayPage({authorizationStatus}: PlayPageProps) {
           {
             screenState === ScreenState.EnterRoom &&
             <ScreenEnterGame socket={socket} setScreenState={setScreenState} />
+          }
+          {
+            screenState === ScreenState.PlayRoom &&
+            <ScreenMainGame socket={socket} setScreenState={setScreenState} />
           }
         </div>
       </main>

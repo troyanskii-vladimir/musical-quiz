@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { RoomStatus } from '../../../config';
+import { RoomStatus, ScreenState } from '../../../config';
 import { GameRoom } from '../../../types/room-data';
 
 import './game-room-item.scss';
@@ -7,17 +7,21 @@ import './game-room-item.scss';
 
 type GameRoomItemProps = {
   room: GameRoom,
+  setScreenState: (arg: ScreenState) => void,
 }
 
 
-export default function GameRoomItem({room}: GameRoomItemProps) {
+export default function GameRoomItem({room, setScreenState}: GameRoomItemProps) {
   const [isPasswordOpen, setIsPasswordOpen] = useState<boolean>(false);
 
 
 
   const handleRoomItemClick = () => {
+
     if (room.isPrivate) {
       setIsPasswordOpen(true);
+    } else {
+      setScreenState(ScreenState.PlayRoom);
     }
   }
 

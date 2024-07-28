@@ -16,10 +16,11 @@ export enum ScreenState {
   SelectMode = 'selectMode',
   CreateRoom = 'createRoom',
   EnterRoom = 'enterRoom',
-  // PlayRoom = 'playRoom',
+  PlayRoom = 'playRoom',
 }
 
 export enum SocketHandlers {
+  getGameList = 'get-game-list',
   createGame = 'create-game',
   joinGame = 'join-game',
   quizJoinGame = 'quiz-join-game',
@@ -33,6 +34,7 @@ export enum RoomStatus {
 
 export enum SliceName {
   Auth = 'Auth',
+  Game = 'Game',
 }
 
 export enum ApiRoute {

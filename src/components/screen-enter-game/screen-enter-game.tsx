@@ -1,8 +1,12 @@
 import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
 import './screen-enter-game.scss';
-import { RoomStatus, ScreenState } from '../../config';
+import { RoomStatus, ScreenState, SocketHandlers } from '../../config';
 import GameRoomItem from './game-room-item/game-room-item';
+import { useEffect } from 'react';
+// import { useAppDispatch } from '../../hooks';
+import { SocketGetGamesRes } from '../../types/socket-data';
+import { MinGameData } from '../../types/game-data';
 
 
 
@@ -13,7 +17,20 @@ type ScreenEnterGameProps = {
 
 
 
-export default function ScreenEnterGame({setScreenState}: ScreenEnterGameProps) {
+export default function ScreenEnterGame({socket, setScreenState}: ScreenEnterGameProps) {
+  // const dispatch = useAppDispatch();
+
+  let games: MinGameData[] = [];
+
+  useEffect(() => {
+    socket.emit(SocketHandlers.getGameList, null, (response: SocketGetGamesRes) => {
+      response as SocketGetGamesRes;
+      games = response.games;
+      console.log(response)
+    });
+  }, [])
+
+  console.log(games);
 
 
   const handleBackButtonClick = () => {
@@ -59,7 +76,7 @@ export default function ScreenEnterGame({setScreenState}: ScreenEnterGameProps) 
         {
           rooms.map((room) => (
             <li key={room.id}>
-              <GameRoomItem room={room} />
+              <GameRoomItem room={room} setScreenState={setScreenState} />
             </li>
           ))
         }

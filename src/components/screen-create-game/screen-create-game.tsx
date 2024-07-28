@@ -3,8 +3,11 @@
 import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
 import './screen-create-game.scss';
-import { ScreenState } from '../../config';
+import { ScreenState, SocketHandlers } from '../../config';
 import { ChangeEvent, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { setGameData } from '../../store/game/game.slice';
+import { SocketCreateGameRes } from '../../types/socket-data';
 
 
 type ScreenCreateGameProps = {
@@ -13,7 +16,9 @@ type ScreenCreateGameProps = {
 }
 
 
-export default function ScreenCreateGame({setScreenState}: ScreenCreateGameProps) {
+export default function ScreenCreateGame({socket, setScreenState}: ScreenCreateGameProps) {
+  const dispatch = useAppDispatch();
+
   const [roomName, setRoomName] = useState<string>('');
   const [privateRoom, setPrivateRoom] = useState<boolean>(false);
   const [roomPassword, setRoomPassword] = useState<string>('');
@@ -23,7 +28,6 @@ export default function ScreenCreateGame({setScreenState}: ScreenCreateGameProps
   const handleBackButtonClick = () => {
     setScreenState(ScreenState.SelectMode);
   }
-
 
   const handleRoomNameChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setRoomName(evt.target.value);
@@ -41,6 +45,19 @@ export default function ScreenCreateGame({setScreenState}: ScreenCreateGameProps
     setRoomPlayers(Number(evt.target.value));
   }
 
+
+  const handleCreateButtonClick = () => {
+    const data = { name: 'test' };
+    socket.emit(SocketHandlers.createGame, data, (response: SocketCreateGameRes) => {
+      response as SocketCreateGameRes;
+
+      if (response.status === 401) {
+        dispatch(setGameData(response.game));
+      } else {
+        console.log('Ошибка создания игры');
+      }
+    })
+  }
 
 
   return (
@@ -102,7 +119,10 @@ export default function ScreenCreateGame({setScreenState}: ScreenCreateGameProps
         />
       </label>
 
-      <button className='button'>
+      <button
+        className='button'
+        onClick={handleCreateButtonClick}
+      >
         Создать и подключиться
       </button>
 

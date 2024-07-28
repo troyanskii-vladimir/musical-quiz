@@ -18,11 +18,6 @@ export default function ScreenSelectGame({socket, setScreenState}: ScreenSelectG
   }
 
   const handleCreateRoomButton = () => {
-    // const data = { name: 'test' };
-    // socket.emit(SocketHandlers.createGame, data, (response: Response) => {
-    //   console.log(response.status);
-    // })
-
     setScreenState(ScreenState.CreateRoom);
   }
 
