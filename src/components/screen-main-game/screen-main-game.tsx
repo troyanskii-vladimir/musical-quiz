@@ -2,6 +2,10 @@ import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
 import './screen-main-game.scss';
 import { ScreenState } from '../../config';
+import { useState } from 'react';
+import { GameData } from '../../types/game-data';
+import { useAppSelector } from '../../hooks';
+import { getGameData } from '../../store/game/game.selectors';
 
 
 type ScreenMainGameProps = {
@@ -11,8 +15,11 @@ type ScreenMainGameProps = {
 
 
 export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameProps) {
+  const [gameData, setGameData] = useState<GameData>(useAppSelector(getGameData));
+
+
   const handleBackButtonClick = () => {
-    setScreenState(ScreenState.SelectMode);
+    setScreenState(ScreenState.EnterRoom);
   }
 
 
@@ -32,19 +39,19 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
 
       <div>
         Название комнаты:
-        <span>ТестНейм1</span>
+        <span>{gameData.name}</span>
       </div>
 
 
       <div>
         Всего игроков:
-        <span>7</span>
+        <span>{gameData.playersCount}</span>
       </div>
 
 
       <div>
         Максимум игроков:
-        <span>10</span>
+        <span>{gameData.maxPlayers}</span>
       </div>
 
 

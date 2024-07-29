@@ -47,7 +47,13 @@ export default function ScreenCreateGame({socket, setScreenState}: ScreenCreateG
 
 
   const handleCreateButtonClick = () => {
-    const data = { name: 'test' };
+    const data = {
+      name: roomName,
+      maxPlayers: roomPlayers,
+      isPrivate: privateRoom,
+      password: roomPassword,
+    };
+
     socket.emit(SocketHandlers.createGame, data, (response: SocketCreateGameRes) => {
       response as SocketCreateGameRes;
 

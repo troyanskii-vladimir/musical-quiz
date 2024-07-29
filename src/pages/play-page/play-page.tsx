@@ -12,7 +12,6 @@ import ScreenEnterGame from '../../components/screen-enter-game/screen-enter-gam
 import ScreenMainGame from '../../components/screen-main-game/screen-main-game';
 
 
-
 const socket = io('http://localhost:3000/');
 
 
@@ -22,13 +21,7 @@ type PlayPageProps = {
 
 
 export default function PlayPage({authorizationStatus}: PlayPageProps) {
-
-  socket.on('connect', () => {
-    console.log('Gratz');
-  })
-
   const [screenState, setScreenState] = useState<ScreenState>(ScreenState.SelectMode);
-
 
 
   return (

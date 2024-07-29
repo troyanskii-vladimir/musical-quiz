@@ -1,10 +1,9 @@
 import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
 import './screen-enter-game.scss';
-import { RoomStatus, ScreenState, SocketHandlers } from '../../config';
+import { ScreenState, SocketHandlers } from '../../config';
 import GameRoomItem from './game-room-item/game-room-item';
-import { useEffect } from 'react';
-// import { useAppDispatch } from '../../hooks';
+import { useEffect, useState } from 'react';
 import { SocketGetGamesRes } from '../../types/socket-data';
 import { MinGameData } from '../../types/game-data';
 
@@ -16,47 +15,38 @@ type ScreenEnterGameProps = {
 }
 
 
-
 export default function ScreenEnterGame({socket, setScreenState}: ScreenEnterGameProps) {
-  // const dispatch = useAppDispatch();
+  const [games, setGames] = useState<MinGameData[]>([]);
 
-  let games: MinGameData[] = [];
 
+  //Поулчения списка игр при первом рендере компонента
   useEffect(() => {
     socket.emit(SocketHandlers.getGameList, null, (response: SocketGetGamesRes) => {
       response as SocketGetGamesRes;
-      games = response.games;
-      console.log(response)
-    });
+
+      if (response.status === 401) {
+        setGames(response.games);
+      } else {
+        console.log('Ошибка получения списка игр');
+      }
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log(games);
+
+  //Поулчения списка игр при создании игры другим каким-нибудь игроком
+  useEffect(() => {
+    socket.on(SocketHandlers.recieveGameList, (response: SocketGetGamesRes) => {
+      response as SocketGetGamesRes;
+      setGames(response.games);
+    });
+  }, [socket])
+
 
 
   const handleBackButtonClick = () => {
     setScreenState(ScreenState.SelectMode);
   }
-
-  const rooms = [
-    {
-      id: '123123',
-      name: 'TestGame1',
-      users: 3,
-      maxUsers: 6,
-      status: RoomStatus.InGame,
-      isPrivate: false,
-    }, {
-      id: '1231232f2',
-      name: 'TestGame2',
-      users: 1,
-      maxUsers: 4,
-      status: RoomStatus.Waiting,
-      isPrivate: true,
-    }
-  ]
-
-
-
 
 
   return (
@@ -74,9 +64,9 @@ export default function ScreenEnterGame({socket, setScreenState}: ScreenEnterGam
 
       <ul className='room-list'>
         {
-          rooms.map((room) => (
-            <li key={room.id}>
-              <GameRoomItem room={room} setScreenState={setScreenState} />
+          games.map((game) => (
+            <li key={game.id}>
+              <GameRoomItem socket={socket} game={game} setScreenState={setScreenState} />
             </li>
           ))
         }

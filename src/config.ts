@@ -22,9 +22,11 @@ export enum ScreenState {
 export enum SocketHandlers {
   getGameList = 'get-game-list',
   createGame = 'create-game',
-  joinGame = 'join-game',
+  JoinGame = 'join-game',
   quizJoinGame = 'quiz-join-game',
   test = 'test',
+
+  recieveGameList = 'recieve-game-list',
 }
 
 export enum RoomStatus {
