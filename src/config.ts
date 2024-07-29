@@ -26,7 +26,21 @@ export enum SocketHandlers {
   quizJoinGame = 'quiz-join-game',
   test = 'test',
 
+  LeaveGame = 'leave-game',
+
   recieveGameList = 'recieve-game-list',
+}
+
+export enum SocketHandlersOn {
+  RoundStart = 'round-start',
+  PlayerJoined = 'player-joined',
+  PlayerReady = 'player-ready',
+  PlayerLeave = 'player-leave',
+}
+
+export enum SocketHandlersEmit {
+  PlayerReadyRound = 'player-ready-round',
+  Answer = 'answer',
 }
 
 export enum RoomStatus {

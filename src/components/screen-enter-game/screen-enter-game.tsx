@@ -43,7 +43,6 @@ export default function ScreenEnterGame({socket, setScreenState}: ScreenEnterGam
   }, [socket])
 
 
-
   const handleBackButtonClick = () => {
     setScreenState(ScreenState.SelectMode);
   }

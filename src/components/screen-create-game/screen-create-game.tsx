@@ -59,6 +59,7 @@ export default function ScreenCreateGame({socket, setScreenState}: ScreenCreateG
 
       if (response.status === 401) {
         dispatch(setGameData(response.game));
+        setScreenState(ScreenState.PlayRoom);
       } else {
         console.log('Ошибка создания игры');
       }
