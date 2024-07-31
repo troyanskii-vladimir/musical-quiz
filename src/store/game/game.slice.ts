@@ -19,16 +19,7 @@ export const gameProccess = createSlice({
     setPlayerId(state, action: PayloadAction<string>) {
       state.playerId = action.payload;
     },
-    setPlayers(state, action: PayloadAction<PlayerData[]>) {
-      state.players = action.payload;
-    },
-    addPlayerToPlayers(state, action: PayloadAction<PlayerData>) {
-      state.players.push(action.payload);
-    },
-    deletePlayerOfPlayers(state, action: PayloadAction<string>) {
-      state.players = state.players.filter((item) => item.id !== action.payload)
-    },
   },
 })
 
-export const { setGameData, setPlayerId, setPlayers, addPlayerToPlayers, deletePlayerOfPlayers } = gameProccess.actions;
+export const { setGameData, setPlayerId } = gameProccess.actions;

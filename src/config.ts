@@ -32,14 +32,22 @@ export enum SocketHandlers {
 }
 
 export enum SocketHandlersOn {
-  RoundStart = 'round-start',
   PlayerJoined = 'player-joined',
-  PlayerReady = 'player-ready',
   PlayerLeave = 'player-leave',
+  PlayerReady = 'player-ready',
+  PlayerNotReady = 'player-not-ready',
+
+  RoundStart = 'round-start',
+  CountDown = 'count-down',
+  ReadyRound = 'ready-round',
+
+  EndRound = 'end-round',
+  EndGame = 'end-game',
 }
 
 export enum SocketHandlersEmit {
   PlayerReadyRound = 'player-ready-round',
+  PlayerNotReadyRound = 'player-not-ready-round',
   Answer = 'answer',
 }
 

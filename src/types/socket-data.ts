@@ -1,9 +1,10 @@
-import { GameData, MinGameData, PlayerData } from './game-data';
+import { GameData, MinGameData } from './game-data';
 
 
 export type SocketCreateGameRes = {
   status: number,
-  game: GameData,
+  playerId: string,
+  gameData: GameData,
 }
 
 export type SocketGetGamesRes = {
@@ -20,7 +21,6 @@ export type SocketJoinGameRes = {
   status: number,
   playerId: string,
   gameData: GameData,
-  players: PlayerData[],
 }
 
 export type SocketLeaveGameRes = {

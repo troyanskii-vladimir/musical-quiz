@@ -6,7 +6,7 @@ import { MinGameData } from '../../../types/game-data';
 import { Socket } from 'socket.io-client';
 import { SocketJoinGameRes } from '../../../types/socket-data';
 import { useAppDispatch } from '../../../hooks';
-import { setGameData, setPlayerId, setPlayers } from '../../../store/game/game.slice';
+import { setGameData, setPlayerId } from '../../../store/game/game.slice';
 
 
 type GameRoomItemProps = {
@@ -36,7 +36,6 @@ export default function GameRoomItem({socket, game, setScreenState}: GameRoomIte
         if (response.status === 200) {
           dispatch(setGameData(response.gameData));
           dispatch(setPlayerId(response.playerId));
-          dispatch(setPlayers(response.players));
           setScreenState(ScreenState.PlayRoom);
         } else {
           console.log('Ошибка подключения к комнате');

@@ -6,7 +6,7 @@ import './screen-create-game.scss';
 import { ScreenState, SocketHandlers } from '../../config';
 import { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { setGameData } from '../../store/game/game.slice';
+import { setGameData, setPlayerId } from '../../store/game/game.slice';
 import { SocketCreateGameRes } from '../../types/socket-data';
 
 
@@ -58,7 +58,9 @@ export default function ScreenCreateGame({socket, setScreenState}: ScreenCreateG
       response as SocketCreateGameRes;
 
       if (response.status === 401) {
-        dispatch(setGameData(response.game));
+        console.log(response.gameData)
+        dispatch(setGameData(response.gameData));
+        dispatch(setPlayerId(response.playerId));
         setScreenState(ScreenState.PlayRoom);
       } else {
         console.log('Ошибка создания игры');

@@ -6,6 +6,7 @@ export type GameData = {
   gameStatus: string,
   playersCount: number,
   maxPlayers: number,
+  players: PlayerData[],
 }
 
 
