@@ -48,6 +48,7 @@ export enum SocketHandlersOn {
 export enum SocketHandlersEmit {
   PlayerReadyRound = 'player-ready-round',
   PlayerNotReadyRound = 'player-not-ready-round',
+
   Answer = 'answer',
 }
 

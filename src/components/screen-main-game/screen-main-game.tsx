@@ -64,7 +64,7 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
     })
 
     socket.on(SocketHandlersOn.RoundStart, () => {
-      setGameIsActive(true);
+      // setGameIsActive(true);
     })
 
     socket.on(SocketHandlersOn.CountDown, (roundTime: number) => {
@@ -77,6 +77,7 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
 
     socket.on(SocketHandlersOn.ReadyRound, () => {
       console.log('Раунд готов!');
+      setGameIsActive(true);
     })
 
     socket.on(SocketHandlersOn.EndGame, () => {
@@ -89,6 +90,9 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       socket.off(SocketHandlersOn.PlayerReady);
       socket.off(SocketHandlersOn.PlayerNotReady);
       socket.off(SocketHandlersOn.RoundStart);
+      socket.off(SocketHandlersOn.EndRound);
+      socket.off(SocketHandlersOn.ReadyRound);
+      socket.off(SocketHandlersOn.EndGame);
     }
   }, [socket, dispatch])
 
@@ -102,6 +106,11 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
         socket.emit(SocketHandlersEmit.PlayerNotReadyRound, game.id);
       }
     }
+
+  const handleAnswerClick = () => {
+    console.log(game.id)
+    socket.emit(SocketHandlersEmit.Answer, game.id, '123');
+  }
 
 
   return (
@@ -150,6 +159,15 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
           {roundTime}
         </div>
       }
+
+
+      <div>
+        <button
+          onClick={handleAnswerClick}
+        >
+          Ответить: '123'
+        </button>
+      </div>
 
 
       <div>
