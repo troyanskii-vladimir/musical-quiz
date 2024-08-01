@@ -32,8 +32,7 @@ export default function GameRound({ socket, question, gameId }: GameRoundProps) 
       answer,
     };
 
-    socket.emit(SocketHandlersEmit.Answer, data, (res: any) => {
-      console.log(res);
+    socket.emit(SocketHandlersEmit.Answer, data, () => {
       setIsAnswered(true);
     });
   }
@@ -41,6 +40,7 @@ export default function GameRound({ socket, question, gameId }: GameRoundProps) 
 
   return (
     <div className='cont-5'>
+      <audio src={question.trackUrl} autoPlay></audio>
       <div className='counter-5'>
         <span>{roundTime}</span>
       </div>

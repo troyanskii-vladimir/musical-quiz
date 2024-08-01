@@ -30,6 +30,8 @@ export type PlayerData = {
 export type Question = {
   type: string;
   question: string;
+  trackUrl: string;
   correctAnswer: string;
+  imageUrl: string;
   answers: string[];
 };
