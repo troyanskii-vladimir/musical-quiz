@@ -10,13 +10,14 @@ import {
 import { useEffect, useState } from 'react';
 import { GameData, PlayerData, Question } from '../../types/game-data';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getGameData, getPlayerId } from '../../store/game/game.selectors';
-import { SocketLeaveGameRes } from '../../types/socket-data';
+import { getGameData } from '../../store/game/game.selectors';
+import { SocketEndGameRes, SocketLeaveGameRes } from '../../types/socket-data';
 import { setGameData } from '../../store/game/game.slice';
 import ReadyBtn from './ready-btn/ready-btn';
 import LobbyPlayersList from './lobby-players-list/lobby-players-list';
 import GetReady from './get-ready/get-ready';
 import GameRound from './game-round/game-round';
+import GameEnd from './game-end/game-end';
 
 type ScreenMainGameProps = {
   socket: Socket;
@@ -27,16 +28,17 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
   const dispatch = useAppDispatch();
 
   //Данные об игре из стейта
-  const [game, setGame] = useState<GameData>(useAppSelector(getGameData));
-  const [playerId, setPlayerId] = useState<string>(useAppSelector(getPlayerId));
+  const game = useAppSelector(getGameData);
+  // const [playerId, setPlayerId] = useState<string>(useAppSelector(getPlayerId));
 
   //Прочие данные игры
   const [players, setPlayers] = useState<PlayerData[]>(game.players);
   const [question, setQuestion] = useState<Question>({} as Question);
-
+  const [results, setResults] = useState<(string | number)[][]>([]);
 
   //Стейт компонента
   const [gameStatus, setGameStatus] = useState<GameStatus>(game.gameStatus as GameStatus);
+
 
   const handleBackButtonClick = () => {
     socket.emit(
@@ -71,14 +73,6 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       setPlayers(playersData);
     });
 
-    // socket.on(SocketHandlersOn.RoundStart, () => {
-    //   // setGameIsActive(true);
-    // });
-
-    // socket.on(SocketHandlersOn.CountDown, (roundTime: number) => {
-    //   setRoundTime(roundTime);
-    // });
-
     // socket.on(SocketHandlersOn.EndRound, () => {
     //   console.log('Раунд завершен!');
     // });
@@ -92,8 +86,9 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       setGameStatus(GameStatus.WaitingForAnswer);
     });
 
-    socket.on(SocketHandlersOn.EndGame, () => {
-      console.log('Игра завершена!');
+    socket.on(SocketHandlersOn.EndGame, (gameResults: SocketEndGameRes) => {
+      setGameStatus(GameStatus.GameEnd);
+      setResults(gameResults.score);
     });
 
     return () => {
@@ -101,7 +96,6 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       socket.off(SocketHandlersOn.PlayerLeave);
       socket.off(SocketHandlersOn.PlayerReady);
       socket.off(SocketHandlersOn.PlayerNotReady);
-      // socket.off(SocketHandlersOn.RoundStart);
       // socket.off(SocketHandlersOn.EndRound);
       socket.off(SocketHandlersOn.GetReady);
       socket.off(SocketHandlersOn.ReadyRound);
@@ -109,12 +103,6 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
     };
   }, [socket, dispatch]);
 
-  // const handleAnswerClick = () => {
-  //   console.log(game.id);
-  //   socket.emit(SocketHandlersEmit.Answer, game.id, '123');
-  // };
-
-  console.log(gameStatus)
 
   return (
     <div className="screen">
@@ -132,6 +120,11 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       }
 
       {
+        gameStatus === GameStatus.WaitingForReady &&
+        <ReadyBtn socket={socket} gameId={game.id} />
+      }
+
+      {
         gameStatus === GameStatus.getReady &&
         <GetReady socket={socket} />
       }
@@ -141,10 +134,9 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
         <GameRound socket={socket} question={question} gameId={game.id} />
       }
 
-
       {
-        gameStatus === GameStatus.WaitingForReady &&
-        <ReadyBtn socket={socket} gameId={game.id} />
+        gameStatus === GameStatus.GameEnd &&
+        <GameEnd results={results} />
       }
 
     </div>
