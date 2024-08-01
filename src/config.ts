@@ -19,6 +19,14 @@ export enum ScreenState {
   PlayRoom = 'playRoom',
 }
 
+export enum GameStatus {
+  WaitingForReady = 'waitingForReady',
+  getReady = 'getReady',
+  WaitingForAnswer = 'waitingForAnswer',
+  RoundEnd = 'roundEnd',
+  GameEnd = 'gameEnd',
+}
+
 export enum SocketHandlers {
   getGameList = 'get-game-list',
   createGame = 'create-game',
