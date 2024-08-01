@@ -20,11 +20,11 @@ export enum ScreenState {
 }
 
 export enum GameStatus {
-  WaitingForReady = 'waitingForReady',
-  getReady = 'getReady',
-  WaitingForAnswer = 'waitingForAnswer',
-  RoundEnd = 'roundEnd',
-  GameEnd = 'gameEnd',
+  WaitingForReady = 'waiting-for-ready',
+  getReady = 'get-ready',
+  WaitingForAnswer = 'waiting-for-answer',
+  RoundEnd = 'round-end',
+  GameEnd = 'game-end',
 }
 
 export enum SocketHandlers {
@@ -45,6 +45,7 @@ export enum SocketHandlersOn {
   PlayerReady = 'player-ready',
   PlayerNotReady = 'player-not-ready',
 
+  GetReady = 'get-ready',
   RoundStart = 'round-start',
   CountDown = 'count-down',
   ReadyRound = 'ready-round',

@@ -26,7 +26,6 @@ export default function GameRoomItem({socket, game, setScreenState, userName}: G
 
 
   const handleRoomItemClick = () => {
-
     if (game.isPrivate) {
       setIsPasswordOpen(true);
     } else {

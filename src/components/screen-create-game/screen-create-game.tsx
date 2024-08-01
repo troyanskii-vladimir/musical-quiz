@@ -47,8 +47,6 @@ export default function ScreenCreateGame({
   };
 
   const handleCreateButtonClick = () => {
-    setScreenState(ScreenState.PlayRoom);
-
     const data = {
       gameData: {
         name: roomName,
@@ -66,10 +64,9 @@ export default function ScreenCreateGame({
         response as SocketCreateGameRes;
 
         if (response.status === 401) {
-          console.log(response.gameData);
           dispatch(setGameData(response.gameData));
           dispatch(setPlayerId(response.playerId));
-          // setScreenState(ScreenState.PlayRoom);
+          setScreenState(ScreenState.PlayRoom);
         } else {
           console.log('Ошибка создания игры');
         }

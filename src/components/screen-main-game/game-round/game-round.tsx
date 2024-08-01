@@ -2,63 +2,60 @@ import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { SocketHandlersEmit, SocketHandlersOn } from '../../../config';
 import { Question } from '../../../types/game-data';
+import './game-round.scss';
+import GameQuestion from './game-question/game-question';
 
 type GameRoundProps = {
-  socket: Socket;
-  gameId: string;
+  socket: Socket,
+  question: Question,
+  gameId: string,
 };
 
-export default function GameRound({ socket, gameId }: GameRoundProps) {
-  const [question, setQuestion] = useState<Question>();
+export default function GameRound({ socket, question, gameId }: GameRoundProps) {
   const [roundTime, setRoundTime] = useState<number>(0);
+  const [isAnswered, setIsAnswered] = useState<boolean>(false);
 
   useEffect(() => {
-    socket.on(SocketHandlersOn.ReadyRound, (questionData: Question) => {
-      setQuestion(questionData);
-    });
-
     socket.on(SocketHandlersOn.CountDown, (time: number) => {
       setRoundTime(time);
     });
 
     return () => {
-      socket.off(SocketHandlersOn.ReadyRound);
       socket.off(SocketHandlersOn.CountDown);
     };
-  }, []);
+  }, [socket]);
 
-  const handleAnswerClick = () => {
+
+  const onAnswerClick = (answer: string) => {
     const data = {
       gameId,
-      answer: question?.answers[0],
+      answer,
     };
 
-    socket.emit(SocketHandlersEmit.Answer, data, (res) => {
+    socket.emit(SocketHandlersEmit.Answer, data, (res: any) => {
       console.log(res);
+      setIsAnswered(true);
     });
-  };
+  }
+
 
   return (
-    <div>
-      <p>
-        it
-        <span>Вопрос: </span>
-        <span>{question?.question}</span>
+    <div className='cont-5'>
+      <div className='counter-5'>
+        <span>{roundTime}</span>
+      </div>
+
+      <p className='question-5'>
+        <span>{question.question}</span>
       </p>
 
       <ul className="answer-list">
-        {question?.answers.map((answer, i) => (
+        {question.answers.map((answer, i) => (
           <li className="answer-item" key={answer + i}>
-            <button className="answer-btn" onClick={}>
-              {answer}
-            </button>
+            <GameQuestion answer={answer} isAnswered={isAnswered} onAnswerClick={onAnswerClick} />
           </li>
         ))}
       </ul>
-
-      <div>
-        <p>Осталось времени: {roundTime}</p>
-      </div>
     </div>
   );
 }

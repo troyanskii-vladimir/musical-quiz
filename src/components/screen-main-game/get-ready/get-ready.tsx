@@ -8,7 +8,7 @@ type GetReadyProps = {
 };
 
 export default function GetReady({ socket }: GetReadyProps) {
-  const [lastTime, setLastTime] = useState<number>(0);
+  const [lastTime, setLastTime] = useState<number>(5);
 
   useEffect(() => {
     socket.on(SocketHandlersOn.CountDown, (time: number) => {
@@ -18,12 +18,13 @@ export default function GetReady({ socket }: GetReadyProps) {
     return () => {
       socket.off(SocketHandlersOn.CountDown);
     };
-  }, []);
+  }, [socket]);
+
 
   return (
-    <div>
-      <p>Подготовка раунда</p>
-      <p>Раунд начнется через {lastTime}</p>
+    <div className='ready-2'>
+      <p className='ready-text-2'>Приготовься!</p>
+      <p className='ready-number-2'>{lastTime}</p>
     </div>
   );
 }

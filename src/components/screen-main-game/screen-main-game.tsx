@@ -5,11 +5,10 @@ import {
   GameStatus,
   ScreenState,
   SocketHandlers,
-  SocketHandlersEmit,
   SocketHandlersOn,
 } from '../../config';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { GameData, PlayerData } from '../../types/game-data';
+import { useEffect, useState } from 'react';
+import { GameData, PlayerData, Question } from '../../types/game-data';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getGameData, getPlayerId } from '../../store/game/game.selectors';
 import { SocketLeaveGameRes } from '../../types/socket-data';
@@ -17,16 +16,14 @@ import { setGameData } from '../../store/game/game.slice';
 import ReadyBtn from './ready-btn/ready-btn';
 import LobbyPlayersList from './lobby-players-list/lobby-players-list';
 import GetReady from './get-ready/get-ready';
+import GameRound from './game-round/game-round';
 
 type ScreenMainGameProps = {
   socket: Socket;
   setScreenState: (arg: ScreenState) => void;
 };
 
-export default function ScreenMainGame({
-  socket,
-  setScreenState,
-}: ScreenMainGameProps) {
+export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameProps) {
   const dispatch = useAppDispatch();
 
   //Данные об игре из стейта
@@ -35,14 +32,11 @@ export default function ScreenMainGame({
 
   //Прочие данные игры
   const [players, setPlayers] = useState<PlayerData[]>(game.players);
-  const [roundTime, setRoundTime] = useState<number>(0);
-  const [gameIsActive, setGameIsActive] = useState<boolean>(false);
-  const [roundIsActive, setRoundIsActive] = useState<boolean>(false);
+  const [question, setQuestion] = useState<Question>({} as Question);
+
 
   //Стейт компонента
-  const [gameStatus, setGameStatus] = useState<GameStatus>(
-    GameStatus.WaitingForReady
-  );
+  const [gameStatus, setGameStatus] = useState<GameStatus>(game.gameStatus as GameStatus);
 
   const handleBackButtonClick = () => {
     socket.emit(
@@ -59,26 +53,6 @@ export default function ScreenMainGame({
     );
   };
 
-  const mockPlayers: PlayerData[] = [
-    {
-      playerName: 'Player1',
-      id: '1233344',
-      ready: false,
-      answers: [],
-    },
-    {
-      playerName: 'Player2',
-      id: '1233ffe344',
-      ready: false,
-      answers: [],
-    },
-    {
-      playerName: 'Player3',
-      id: '12332f3b3344',
-      ready: false,
-      answers: [],
-    },
-  ];
 
   useEffect(() => {
     socket.on(SocketHandlersOn.PlayerJoined, (playersData: PlayerData[]) => {
@@ -97,21 +71,25 @@ export default function ScreenMainGame({
       setPlayers(playersData);
     });
 
-    socket.on(SocketHandlersOn.RoundStart, () => {
-      // setGameIsActive(true);
+    // socket.on(SocketHandlersOn.RoundStart, () => {
+    //   // setGameIsActive(true);
+    // });
+
+    // socket.on(SocketHandlersOn.CountDown, (roundTime: number) => {
+    //   setRoundTime(roundTime);
+    // });
+
+    // socket.on(SocketHandlersOn.EndRound, () => {
+    //   console.log('Раунд завершен!');
+    // });
+
+    socket.on(SocketHandlersOn.GetReady, () => {
+      setGameStatus(GameStatus.getReady);
     });
 
-    socket.on(SocketHandlersOn.CountDown, (roundTime: number) => {
-      setRoundTime(roundTime);
-    });
-
-    socket.on(SocketHandlersOn.EndRound, () => {
-      console.log('Раунд завершен!');
-    });
-
-    socket.on(SocketHandlersOn.ReadyRound, () => {
-      console.log('Раунд готов!');
-      setGameIsActive(true);
+    socket.on(SocketHandlersOn.ReadyRound, (questionData: Question) => {
+      setQuestion(questionData);
+      setGameStatus(GameStatus.WaitingForAnswer);
     });
 
     socket.on(SocketHandlersOn.EndGame, () => {
@@ -123,45 +101,52 @@ export default function ScreenMainGame({
       socket.off(SocketHandlersOn.PlayerLeave);
       socket.off(SocketHandlersOn.PlayerReady);
       socket.off(SocketHandlersOn.PlayerNotReady);
-      socket.off(SocketHandlersOn.RoundStart);
-      socket.off(SocketHandlersOn.EndRound);
+      // socket.off(SocketHandlersOn.RoundStart);
+      // socket.off(SocketHandlersOn.EndRound);
+      socket.off(SocketHandlersOn.GetReady);
       socket.off(SocketHandlersOn.ReadyRound);
       socket.off(SocketHandlersOn.EndGame);
     };
   }, [socket, dispatch]);
 
-  const handleAnswerClick = () => {
-    console.log(game.id);
-    socket.emit(SocketHandlersEmit.Answer, game.id, '123');
-  };
+  // const handleAnswerClick = () => {
+  //   console.log(game.id);
+  //   socket.emit(SocketHandlersEmit.Answer, game.id, '123');
+  // };
+
+  console.log(gameStatus)
 
   return (
     <div className="screen">
       <div className="title-select">
-        <span>asd</span>
+        <span>{game.name}</span>
       </div>
 
       <button className="back-btn" onClick={handleBackButtonClick}>
         Назад
       </button>
 
-      {gameStatus === GameStatus.WaitingForReady && (
-        <LobbyPlayersList players={mockPlayers} />
-      )}
+      {
+        gameStatus === GameStatus.WaitingForReady &&
+        <LobbyPlayersList players={players} />
+      }
 
-      {gameStatus === GameStatus.getReady && <GetReady socket={socket} />}
+      {
+        gameStatus === GameStatus.getReady &&
+        <GetReady socket={socket} />
+      }
 
-      {/* <div>
-        <button
-          onClick={handleAnswerClick}
-        >
-          Ответить: '123'
-        </button>
-      </div> */}
+      {
+        gameStatus === GameStatus.WaitingForAnswer &&
+        <GameRound socket={socket} question={question} gameId={game.id} />
+      }
 
-      {gameStatus === GameStatus.WaitingForReady && (
-        <ReadyBtn socket={socket} gameId={'123213321'} />
-      )}
+
+      {
+        gameStatus === GameStatus.WaitingForReady &&
+        <ReadyBtn socket={socket} gameId={game.id} />
+      }
+
     </div>
   );
 }

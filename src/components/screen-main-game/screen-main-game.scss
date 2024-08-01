@@ -4,10 +4,10 @@
 
 
 .screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-between;
+  // align-items: center;
   position: relative;
 
   background-color: white;
@@ -38,23 +38,6 @@
 
   &:hover {
     background-color: $color-primary-100;
-  }
-
-  &:active {
-    background-color: #333;
-  }
-}
-
-
-.ready-btn {
-  display: block;
-  width: 60px;
-  height: 40px;
-
-  background-color: aquamarine;
-
-  &:hover {
-    background-color: rgba(aquamarine, 0.5);
   }
 
   &:active {

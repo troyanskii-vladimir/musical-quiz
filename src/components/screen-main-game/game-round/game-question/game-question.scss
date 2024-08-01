@@ -1,0 +1,28 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/normalize.css';
+
+
+.answer-btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(#999, 0.5);
+
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 22px;
+
+  &:hover {
+    background-color: rgba(#999, 0.3);
+  }
+
+  &:hover {
+    background-color: rgba(#333, 0.3);
+  }
+
+  &:disabled {
+    background-color: rgba(#333, 0.7);
+  }
+}

@@ -25,7 +25,7 @@ export default function ReadyBtn({socket, gameId}: ReadyBtnProps) {
 
 
   return (
-    <div className='cont'>
+    <div className='cont-3'>
       <label className={`ready-btn ${ready ? 'active' : ''}`}>
         <input
           className='ready-checkbox'

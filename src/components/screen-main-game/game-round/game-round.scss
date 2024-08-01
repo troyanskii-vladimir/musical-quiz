@@ -1,0 +1,52 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+@import '../../../../styles/normalize.css';
+
+
+.cont-5 {
+  width: 100%;
+}
+
+
+.counter-5 {
+  margin-bottom: 25px;
+
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 22px;
+}
+
+
+.question-5 {
+  display: block;
+  width: 100%;
+
+  margin-bottom: 25px;
+
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+
+.answer-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: wrap;
+
+  width: 100%;
+  height: 165px;
+}
+
+
+.answer-item {
+  display: block;
+  width: calc(50% - 15px);
+  height: 60px;
+
+  border: 5px solid $color-primary-100;
+  border-radius: 15px;
+}
