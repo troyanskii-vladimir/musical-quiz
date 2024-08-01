@@ -10,6 +10,8 @@ import { useState } from 'react';
 import ScreenCreateGame from '../../components/screen-create-game/screen-create-game';
 import ScreenEnterGame from '../../components/screen-enter-game/screen-enter-game';
 import ScreenMainGame from '../../components/screen-main-game/screen-main-game';
+import { useAppSelector } from '../../hooks';
+import { getUserData } from '../../store/auth/auth.selectors';
 
 
 const socket = io('http://localhost:3000/');
@@ -22,6 +24,7 @@ type PlayPageProps = {
 
 export default function PlayPage({authorizationStatus}: PlayPageProps) {
   const [screenState, setScreenState] = useState<ScreenState>(ScreenState.SelectMode);
+  const userName = useAppSelector(getUserData);
 
 
   return (
@@ -35,11 +38,11 @@ export default function PlayPage({authorizationStatus}: PlayPageProps) {
           }
           {
             screenState === ScreenState.CreateRoom &&
-            <ScreenCreateGame socket={socket} setScreenState={setScreenState} />
+            <ScreenCreateGame socket={socket} setScreenState={setScreenState} userName={userName} />
           }
           {
             screenState === ScreenState.EnterRoom &&
-            <ScreenEnterGame socket={socket} setScreenState={setScreenState} />
+            <ScreenEnterGame socket={socket} setScreenState={setScreenState} userName={userName} />
           }
           {
             screenState === ScreenState.PlayRoom &&

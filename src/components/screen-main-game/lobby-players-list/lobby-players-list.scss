@@ -1,0 +1,60 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+@import '../../../../styles/normalize.css';
+
+
+.cont-list {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+
+.player-item {
+  width: calc(50% - 15px);
+  height: 60px;
+
+  margin-top: 20px;
+
+  border: 2px solid $color-primary-100;
+
+
+  display: flex;
+}
+
+
+.player-name {
+  display: block;
+  width: 70%;
+  height: 100%;
+
+  padding: 18px 5px 18px;
+
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+
+.player-status {
+  display: block;
+  width: 30%;
+  height: 100%;
+
+  padding: 20px 0;
+
+  background-color: #999;
+
+  text-align: center;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.ready {
+  background-color: green;
+}

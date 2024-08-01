@@ -8,15 +8,17 @@ import { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { setGameData, setPlayerId } from '../../store/game/game.slice';
 import { SocketCreateGameRes } from '../../types/socket-data';
+import { UserData } from '../../types/user-data';
 
 
 type ScreenCreateGameProps = {
   socket: Socket,
   setScreenState: (arg: ScreenState) => void,
+  userName: UserData,
 }
 
 
-export default function ScreenCreateGame({socket, setScreenState}: ScreenCreateGameProps) {
+export default function ScreenCreateGame({socket, setScreenState, userName}: ScreenCreateGameProps) {
   const dispatch = useAppDispatch();
 
   const [roomName, setRoomName] = useState<string>('');
@@ -48,10 +50,13 @@ export default function ScreenCreateGame({socket, setScreenState}: ScreenCreateG
 
   const handleCreateButtonClick = () => {
     const data = {
-      name: roomName,
-      maxPlayers: roomPlayers,
-      isPrivate: privateRoom,
-      password: roomPassword,
+      gameData: {
+        name: roomName,
+        maxPlayers: roomPlayers,
+        isPrivate: privateRoom,
+        password: roomPassword,
+      },
+      userName: userName.userName ? userName.userName : userName.email,
     };
 
     socket.emit(SocketHandlers.createGame, data, (response: SocketCreateGameRes) => {

@@ -1,0 +1,54 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+@import '../../../../styles/normalize.css';
+
+
+.cont {
+  width: 200px;
+}
+
+.ready-checkbox {
+  display: none;
+}
+
+
+.ready-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+
+  background-color: red;
+
+  border-radius: 15px;
+
+  &:hover {
+    background-color: rgba(red, 0.5);
+  }
+
+  &:active {
+    background-color: rgba(red, 0);
+  }
+}
+
+.active {
+  background-color: green;
+
+  &:hover {
+    background-color: rgba(green, 0.5);
+  }
+
+  &:active {
+    background-color: rgba(green, 0);
+  }
+}
+
+
+.ready-text {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 26px;
+}
+

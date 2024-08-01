@@ -7,16 +7,18 @@ import { Socket } from 'socket.io-client';
 import { SocketJoinGameRes } from '../../../types/socket-data';
 import { useAppDispatch } from '../../../hooks';
 import { setGameData, setPlayerId } from '../../../store/game/game.slice';
+import { UserData } from '../../../types/user-data';
 
 
 type GameRoomItemProps = {
   socket: Socket,
   game: MinGameData,
   setScreenState: (arg: ScreenState) => void,
+  userName: UserData,
 }
 
 
-export default function GameRoomItem({socket, game, setScreenState}: GameRoomItemProps) {
+export default function GameRoomItem({socket, game, setScreenState, userName}: GameRoomItemProps) {
   const dispatch = useAppDispatch();
 
   const [isPasswordOpen, setIsPasswordOpen] = useState<boolean>(false);
@@ -28,7 +30,10 @@ export default function GameRoomItem({socket, game, setScreenState}: GameRoomIte
     if (game.isPrivate) {
       setIsPasswordOpen(true);
     } else {
-      const data = {gameId: game.id};
+      const data = {
+        gameId: game.id,
+        userName: userName.userName ? userName.userName : userName.email,
+      };
 
       socket.emit(SocketHandlers.JoinGame, data, (response: SocketJoinGameRes) => {
         response as SocketJoinGameRes;

@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getGameData, getPlayerId } from '../../store/game/game.selectors';
 import { SocketLeaveGameRes } from '../../types/socket-data';
 import { setGameData } from '../../store/game/game.slice';
+import ReadyBtn from './ready-btn/ready-btn';
+import LobbyPlayersList from './lobby-players-list/lobby-players-list';
 
 
 type ScreenMainGameProps = {
@@ -23,14 +25,12 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
   const [game, setGame] = useState<GameData>(useAppSelector(getGameData));
   const [playerId, setPlayerId] = useState<string>(useAppSelector(getPlayerId));
 
-  const [gameIsActive, setGameIsActive] = useState<boolean>(false);
-
   //Прочие данные игры
   const [players, setPlayers] = useState<PlayerData[]>(game.players);
   const [roundTime, setRoundTime] = useState<number>(0);
+  const [gameIsActive, setGameIsActive] = useState<boolean>(false);
+  const [roundIsActive, setRoundIsActive] = useState<boolean>(false);
 
-  //Стейт компонента
-  const [ready, setReady] = useState<boolean>(false);
 
 
   const handleBackButtonClick = () => {
@@ -97,16 +97,6 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
   }, [socket, dispatch])
 
 
-    const handleReadyButtonClick = (evt: ChangeEvent<HTMLInputElement>) => {
-      setReady((prev) => !prev);
-
-      if (evt.target.checked) {
-        socket.emit(SocketHandlersEmit.PlayerReadyRound, game.id);
-      } else {
-        socket.emit(SocketHandlersEmit.PlayerNotReadyRound, game.id);
-      }
-    }
-
   const handleAnswerClick = () => {
     console.log(game.id)
     socket.emit(SocketHandlersEmit.Answer, game.id, '123');
@@ -116,7 +106,7 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
   return (
     <div className='screen'>
       <div className='title-select'>
-        <span>Игра</span>
+        <span>{game.name}</span>
       </div>
 
       <button
@@ -127,60 +117,28 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       </button>
 
 
-      <div>
-        Название комнаты:
-        <span>{game.name}</span>
-      </div>
+      <LobbyPlayersList players={players} />
 
 
-      <div>
-        Игроков:
-        <span>{players.length}/{game.maxPlayers}</span>
-      </div>
-
-
-      <div>
-        Игроки:
-        {
-          players.map((player) => (
-            <p key={player.id}>
-              <span>{player.playerName}</span>
-              <span>{player.ready ? ' Готов' : ' Не готов'}</span>
-            </p>
-          ))
-        }
-      </div>
-
-
-      {
+      {/* {
         gameIsActive &&
         <div>
           Игра началась
           {roundTime}
         </div>
-      }
+      } */}
 
 
-      <div>
+      {/* <div>
         <button
           onClick={handleAnswerClick}
         >
           Ответить: '123'
         </button>
-      </div>
+      </div> */}
 
 
-      <div>
-        Готов к началу раунда
-        <input
-          className='ready-btn'
-          type='checkbox'
-          checked={ready}
-          onChange={handleReadyButtonClick}
-          // onClick={handleReadyButtonClick}
-        />
-      </div>
-
+      <ReadyBtn socket={socket} gameId={game.id} />
 
     </div>
   );

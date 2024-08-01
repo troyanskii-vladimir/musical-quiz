@@ -6,16 +6,18 @@ import GameRoomItem from './game-room-item/game-room-item';
 import { useEffect, useState } from 'react';
 import { SocketGetGamesRes } from '../../types/socket-data';
 import { MinGameData } from '../../types/game-data';
+import { UserData } from '../../types/user-data';
 
 
 
 type ScreenEnterGameProps = {
   socket: Socket,
   setScreenState: (arg: ScreenState) => void,
+  userName: UserData,
 }
 
 
-export default function ScreenEnterGame({socket, setScreenState}: ScreenEnterGameProps) {
+export default function ScreenEnterGame({socket, setScreenState, userName}: ScreenEnterGameProps) {
   const [games, setGames] = useState<MinGameData[]>([]);
 
 
@@ -65,7 +67,7 @@ export default function ScreenEnterGame({socket, setScreenState}: ScreenEnterGam
         {
           games.map((game) => (
             <li key={game.id}>
-              <GameRoomItem socket={socket} game={game} setScreenState={setScreenState} />
+              <GameRoomItem socket={socket} game={game} setScreenState={setScreenState} userName={userName} />
             </li>
           ))
         }
