@@ -30,7 +30,7 @@ export default function Header({authorizationStatus}: HeaderProps) {
             to={AppRoute.Main}
             aria-label="Переход на главную"
           >
-            <span>СВГ лого</span>
+            <img src='./songspot-logo.svg' className='test123' />
           </Link>
           <nav className="main-nav">
             <ul className="main-nav__list">

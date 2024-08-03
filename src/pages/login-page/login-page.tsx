@@ -116,6 +116,7 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
   return (
     <div className='register-page'>
       <Header authorizationStatus={authorizationStatus} />
+      <img src='./vector.svg' className='test12333' />
       <main className='main-container'>
           <div className='wrapper'>
 
