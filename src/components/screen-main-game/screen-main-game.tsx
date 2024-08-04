@@ -73,10 +73,6 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       setPlayers(playersData);
     });
 
-    // socket.on(SocketHandlersOn.EndRound, () => {
-    //   console.log('Раунд завершен!');
-    // });
-
     socket.on(SocketHandlersOn.GetReady, () => {
       setGameStatus(GameStatus.getReady);
     });
@@ -84,6 +80,10 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
     socket.on(SocketHandlersOn.ReadyRound, (questionData: Question) => {
       setQuestion(questionData);
       setGameStatus(GameStatus.WaitingForAnswer);
+    });
+
+    socket.on(SocketHandlersOn.EndRound, (data) => {
+      console.log(data);
     });
 
     socket.on(SocketHandlersOn.EndGame, (gameResults: SocketEndGameRes) => {
@@ -96,9 +96,9 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       socket.off(SocketHandlersOn.PlayerLeave);
       socket.off(SocketHandlersOn.PlayerReady);
       socket.off(SocketHandlersOn.PlayerNotReady);
-      // socket.off(SocketHandlersOn.EndRound);
       socket.off(SocketHandlersOn.GetReady);
       socket.off(SocketHandlersOn.ReadyRound);
+      socket.off(SocketHandlersOn.EndRound);
       socket.off(SocketHandlersOn.EndGame);
     };
   }, [socket, dispatch]);
