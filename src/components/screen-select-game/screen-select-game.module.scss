@@ -14,7 +14,14 @@
   height: 400px;
 
   margin: 0 auto;
+  margin-top: 100px;
   padding: 30px;
+
+
+  @include vp-767 {
+    width: calc(100% - 28px);
+    margin: 14px;
+  }
 }
 
 .title-select {

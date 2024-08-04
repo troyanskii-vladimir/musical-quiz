@@ -4,22 +4,29 @@
 
 
 .screen {
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: space-between;
-  // align-items: center;
   position: relative;
+  display: block;
+  margin: 0 auto;
 
   background-color: white;
   width: 500px;
   height: 550px;
 
-  margin: 0 auto;
   padding: 30px;
+  margin-top: 100px;
+
+  @include vp-767 {
+    width: calc(100% - 28px);
+    margin-top: 14px;
+    padding: 14px;
+  }
 }
 
 .title-select {
+  display: block;
+  margin: 0 auto;
 
+  text-align: center;
   font-weight: 700;
   font-size: 30px;
   line-height: 30px;
@@ -42,5 +49,10 @@
 
   &:active {
     background-color: #333;
+  }
+
+  @include vp-767 {
+    top: 14px;
+    left: 14px;
   }
 }

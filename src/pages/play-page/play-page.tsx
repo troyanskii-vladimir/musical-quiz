@@ -4,7 +4,8 @@ import Header from '../../components/header/header';
 
 
 import '../../../styles/container.scss';
-import './play-page.scss';
+import styles from './play-page.module.scss';
+
 import ScreenSelectGame from '../../components/screen-select-game/screen-select-game';
 import { useState } from 'react';
 import ScreenCreateGame from '../../components/screen-create-game/screen-create-game';
@@ -28,10 +29,10 @@ export default function PlayPage({authorizationStatus}: PlayPageProps) {
 
 
   return (
-    <div className='play-page'>
+    <div className={styles['play-page']}>
       <Header authorizationStatus={authorizationStatus} />
       <main className='main-container'>
-        <div className="wrapper">
+        <div className={styles['wrapper']}>
           {
             screenState === ScreenState.SelectMode &&
             <ScreenSelectGame socket={socket} setScreenState={setScreenState} />

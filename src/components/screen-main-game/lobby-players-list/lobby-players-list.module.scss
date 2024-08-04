@@ -21,8 +21,11 @@
 
   border: 2px solid $color-primary-100;
 
-
   display: flex;
+
+  @include vp-767 {
+    width: calc(50% - 7px);
+  }
 }
 
 

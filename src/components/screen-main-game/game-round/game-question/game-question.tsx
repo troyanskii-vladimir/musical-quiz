@@ -1,4 +1,4 @@
-import './game-question.scss';
+import styles from './game-question.module.scss';
 
 
 type GameQuestionProps = {
@@ -16,7 +16,7 @@ export default function GameQuestion({answer, isAnswered, onAnswerClick}: GameQu
 
   return (
     <button
-      className="answer-btn"
+      className={styles['answer-btn']}
       onClick={handleAnswerClick}
       disabled={isAnswered}
     >

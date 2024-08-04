@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { SocketHandlersEmit, SocketHandlersOn } from '../../../config';
 import { Question } from '../../../types/game-data';
-import './game-round.scss';
+import styles from './game-round.module.scss';
 import GameQuestion from './game-question/game-question';
 
 type GameRoundProps = {
@@ -39,19 +39,19 @@ export default function GameRound({ socket, question, gameId }: GameRoundProps) 
 
 
   return (
-    <div className='cont-5'>
+    <div className={styles['cont-5']}>
       <audio src={question.trackUrl} autoPlay></audio>
-      <div className='counter-5'>
+      <div className={styles['counter-5']}>
         <span>{roundTime}</span>
       </div>
 
-      <p className='question-5'>
+      <p className={styles['question-5']}>
         <span>{question.question}</span>
       </p>
 
-      <ul className="answer-list">
+      <ul className={styles['answer-list']}>
         {question.answers.map((answer, i) => (
-          <li className="answer-item" key={answer + i}>
+          <li className={styles['answer-item']} key={answer + i}>
             <GameQuestion answer={answer} isAnswered={isAnswered} onAnswerClick={onAnswerClick} />
           </li>
         ))}

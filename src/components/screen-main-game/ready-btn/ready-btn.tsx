@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import './ready-btn.scss';
+import styles from './ready-btn.module.scss';
 import { Socket } from 'socket.io-client';
 import { SocketHandlersEmit } from '../../../config';
 
@@ -25,15 +25,15 @@ export default function ReadyBtn({socket, gameId}: ReadyBtnProps) {
 
 
   return (
-    <div className='cont-3'>
-      <label className={`ready-btn ${ready ? 'active' : ''}`}>
+    <div className={styles['cont-3']}>
+      <label className={`${styles['ready-btn']} ${ready ? styles['active'] : ''}`}>
         <input
-          className='ready-checkbox'
+          className={styles['ready-checkbox']}
           type='checkbox'
           checked={ready}
           onChange={handleReadyButtonClick}
         />
-      <span className='ready-text'>{ready ? 'Готов' : 'Не готов'}</span>
+      <span className={styles['ready-text']}>{ready ? 'Готов' : 'Не готов'}</span>
       </label>
     </div>
   );

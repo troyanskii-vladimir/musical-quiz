@@ -2,7 +2,7 @@ import { Socket } from 'socket.io-client';
 import { ScreenState, SocketHandlers } from '../../config';
 
 import '../../../styles/container.scss';
-import './screen-select-game.scss';
+import styles from './screen-select-game.module.scss';
 
 
 type ScreenSelectGameProps = {
@@ -31,30 +31,30 @@ export default function ScreenSelectGame({socket, setScreenState}: ScreenSelectG
 
 
   return (
-    <div className='screen'>
-      <div className='title-select'>
+    <div className={styles['screen']}>
+      <div className={styles['title-select']}>
         <span>Выберите режим игры</span>
       </div>
 
-      <button className='button-select'
+      <button className={styles['button-select']}
         onClick={handleQuiqGameEnterButton}
       >
         Быстрая игра
       </button>
 
-      <button className='button-select'
+      <button className={styles['button-select']}
         onClick={handleCreateRoomButton}
       >
         Создать комнату
       </button>
 
-      <button className='button-select'
+      <button className={styles['button-select']}
         onClick={handleEnterRoomButton}
       >
         Войти в комнату
       </button>
 
-      <button className='button-select'
+      <button className={styles['button-select']}
         onClick={handleTestButton}
       >
         Тест

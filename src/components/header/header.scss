@@ -4,10 +4,8 @@
 
 
 .header {
-  // background-color: $color-primary-100;
-  // background-color: #f172a1;
-  // background-color: #4e148c;
-    background-color: rgba(#8a2be2, 1);;
+  background-color: $color-default-violet;
+  padding: 0 10px;
 }
 
 .header-container {
@@ -17,6 +15,15 @@
 
   height: 100px;
   position: relative;
+
+  @include vp-767 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    flex-wrap: wrap;
+  }
 }
 
 .header__logo {
@@ -26,6 +33,10 @@
   height: 100%;
   width: 200px;
 
+  @include vp-767 {
+    height: 60px;
+  }
+
   &:hover {
     background-color: rgba(rgb(74, 74, 74), 0.7);
   }
@@ -33,18 +44,14 @@
   &:active {
     background-color: black;
   }
-
-
-  span {
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 30px;
-    color: black;
-  }
 }
 
 .main-nav {
   height: 100%;
+
+  @include vp-767 {
+    display: none;
+  }
 }
 
 .main-nav__list {
@@ -54,9 +61,10 @@
 }
 
 .main-nav__item {
-  height: 100%;
-  margin-top: 0px;
-  padding: 35px 0;
+  display: block;
+  height: 70px;
+
+  margin: 15px 0;
 
   &:hover {
     background-color: rgba(rgb(74, 74, 74), 0.7);
@@ -68,13 +76,14 @@
 }
 
 .main-nav__link {
-  height: 100%;
-  padding: 35px;
+  display: block;
+  padding: 17px;
 
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 30px;
-  color: black;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 36px;
+  color: $color-default-yellow;
 }
 
 
@@ -82,8 +91,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 70px;
   width: 200px;
+
+  border: 4px solid $color-default-yellow;
+  border-radius: 30px;
 
   &:hover {
     background-color: rgba(rgb(74, 74, 74), 0.7);
@@ -93,12 +105,18 @@
     background-color: black;
   }
 
+  @include vp-767 {
+    height: 60px;
+  }
+
 
   span {
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 30px;
-    color: black;
+    overflow: hidden;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    color: $color-default-yellow;
   }
 }
 

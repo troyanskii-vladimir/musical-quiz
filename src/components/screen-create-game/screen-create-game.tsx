@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
-import './screen-create-game.scss';
+import styles from './screen-create-game.module.scss';
 import { ScreenState, SocketHandlers } from '../../config';
 import { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
@@ -75,19 +75,19 @@ export default function ScreenCreateGame({
   };
 
   return (
-    <div className="screen">
-      <div className="title-select">
+    <div className={styles['screen']}>
+      <div className={styles["title-select"]}>
         <span>Создать комнату</span>
       </div>
 
-      <button className="back-btn" onClick={handleBackButtonClick}>
+      <button className={styles["back-btn"]} onClick={handleBackButtonClick}>
         Назад
       </button>
 
-      <label className="input-container">
-        <span className="input-name">Название комнаты</span>
+      <label className={styles["input-container"]}>
+        <span className={styles["input-name"]}>Название комнаты</span>
         <input
-          className="input-input"
+          className={styles["input-input"]}
           type="text"
           maxLength={25}
           value={roomName}
@@ -95,21 +95,21 @@ export default function ScreenCreateGame({
         />
       </label>
 
-      <label className="checkbox-container">
-        <span className="checkbox-name">Закрытая комната</span>
+      <label className={styles["checkbox-container"]}>
+        <span className={styles["checkbox-name"]}>Закрытая комната</span>
         <input
-          className="checkbox-input"
+          className={styles["checkbox-input"]}
           type="checkbox"
           checked={privateRoom}
           onChange={handleIsPrivateChange}
         />
-        <span className="checkbox-fake"></span>
+        <span className={styles["checkbox-fake"]}></span>
       </label>
 
-      <label className="input-container">
-        <span className="input-name">Пароль</span>
+      <label className={styles["input-container"]}>
+        <span className={styles["input-name"]}>Пароль</span>
         <input
-          className="input-input"
+          className={styles["input-input"]}
           type="text"
           maxLength={15}
           disabled={!privateRoom}
@@ -118,12 +118,12 @@ export default function ScreenCreateGame({
         />
       </label>
 
-      <label className="range-container">
-        <span className="range-name">
+      <label className={styles["range-container"]}>
+        <span className={styles["range-name"]}>
           Максимальное количество игроков: {roomPlayers}
         </span>
         <input
-          className="range-input"
+          className={styles["range-input"]}
           type="range"
           min={2}
           max={6}
@@ -132,7 +132,7 @@ export default function ScreenCreateGame({
         />
       </label>
 
-      <button className="button" onClick={handleCreateButtonClick}>
+      <button className={styles["button"]} onClick={handleCreateButtonClick}>
         Создать и подключиться
       </button>
     </div>

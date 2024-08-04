@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
-import './screen-main-game.scss';
+import styles from './screen-main-game.module.scss';
 import {
   GameStatus,
   ScreenState,
@@ -105,12 +105,12 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
 
 
   return (
-    <div className="screen">
-      <div className="title-select">
+    <div className={styles['screen']}>
+      <div className={styles['title-select']}>
         <span>{game.name}</span>
       </div>
 
-      <button className="back-btn" onClick={handleBackButtonClick}>
+      <button className={styles['back-btn']} onClick={handleBackButtonClick}>
         Назад
       </button>
 

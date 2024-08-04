@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { RoomStatus, ScreenState, SocketHandlers } from '../../../config';
 
-import './game-room-item.scss';
+import styles from './game-room-item.module.scss';
 import { MinGameData } from '../../../types/game-data';
 import { Socket } from 'socket.io-client';
 import { SocketJoinGameRes } from '../../../types/socket-data';
@@ -71,51 +71,51 @@ export default function GameRoomItem({socket, game, setScreenState, userName}: G
 
   return (
     <div
-      className={`room-item ${game.isPrivate ? 'locked' : ''} ${isPasswordOpen ? 'password-open' : ''}`}
+      className={`${styles['room-item']} ${game.isPrivate ? styles['locked'] : ''} ${isPasswordOpen ? styles['password-open'] : ''}`}
       onClick={handleRoomItemClick}
     >
-      <div className={`room-status ${game.gameStatus === RoomStatus.InGame ? 'ingame' : 'waiting'}`}>
+      <div className={`${styles['room-status']} ${game.gameStatus === RoomStatus.InGame ? styles['ingame'] : styles['waiting']}`}>
         {
           game.gameStatus === RoomStatus.InGame ? 'Идет игра' : 'Ожидание игроков'
         }
       </div>
       {
         game.isPrivate &&
-        <div className='lock-block'>
+        <div className={styles['lock-block']}>
           Закрытое лобби
         </div>
       }
       {
         isPasswordOpen &&
-        <div className='password-block'>
+        <div className={styles['password-block']}>
           <button
             className='password-close'
             onClick={handleClosePasswordEnterClick}
           >
             Отмена
           </button>
-          <span className='password-text'>Введите пароль</span>
-          <label className='password-container'>
+          <span className={styles['password-text']}>Введите пароль</span>
+          <label className={styles['password-container']}>
             <input
-              className='password-input'
-              type="text"
+              className={styles['password-input']}
+              type='text'
               value={roomPassword}
               onChange={handleRoomPasswordChange}
             />
           </label>
           <button
-            className='password-btn'
+            className={styles['password-btn']}
             onClick={handleConfirmPasswordClick}
           >
             Войти
           </button>
         </div>
       }
-      <div className="room-info">
-        <div className="room-name">
+      <div className={styles['room-info']}>
+        <div className={styles['room-name']}>
           <span>{game.name}</span>
         </div>
-        <div className="room-players">
+        <div className={styles['room-players']}>
           <span>Игроков: {game.playersCount}/{game.maxPlayers}</span>
         </div>
       </div>

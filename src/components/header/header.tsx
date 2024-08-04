@@ -41,7 +41,7 @@ export default function Header({authorizationStatus}: HeaderProps) {
               </li>
               <li className="main-nav__item">
                 <Link className="main-nav__link" to={AppRoute.Main}>
-                  Лидеры
+                  Рекорды
                 </Link>
               </li>
             </ul>

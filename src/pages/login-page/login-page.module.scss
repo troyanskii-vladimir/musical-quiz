@@ -4,10 +4,8 @@
 
 
 .register-page {
-  // background-color: #999;
   background-color: #a1c3d1;
-  // background-color: #f0ebf4;
-  background-color: rgba(#0eff0e, 0.9);
+  background-color: rgba($color-default-violet, 0.8);
   height: 100vh;
 }
 
@@ -22,10 +20,13 @@
 
 .test12333 {
   width: 100%;
-  height: 100px;
+  height: 150px;
+
+
+  @include vp-767 {
+    display: none;
+  }
 }
-
-
 
 
 .wrapper {
@@ -37,6 +38,11 @@
   display: flex;
   justify-content: space-evenly;
 
+  @include vp-767 {
+    flex-direction: column;
+    margin-top: 14px;
+    padding: 0 14px;
+  }
 }
 
 
@@ -49,6 +55,12 @@
   padding: 20px;
 
   background-color: white;
+
+  @include vp-767 {
+    width: 100%;
+
+    margin-bottom: 14px;
+  }
 
 
   .title-container {

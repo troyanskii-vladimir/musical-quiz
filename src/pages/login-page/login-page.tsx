@@ -8,7 +8,8 @@ import { AppRoute, AuthorizationStatus } from '../../config';
 import Header from '../../components/header/header';
 
 import '../../../styles/container.scss';
-import './login-page.scss';
+// eslint-disable-next-line
+import styles from './login-page.module.scss';
 
 
 
@@ -114,14 +115,14 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
 
 
   return (
-    <div className='register-page'>
+    <div className={styles['register-page']}>
       <Header authorizationStatus={authorizationStatus} />
-      <img src='./vector.svg' className='test12333' />
+      <img src='./test.svg' className={styles['test12333']} />
       <main className='main-container'>
-          <div className='wrapper'>
+          <div className={styles['wrapper']}>
 
-            <div className="form">
-              <div className='title-container'>
+            <div className={styles['form']}>
+              <div className={styles['title-container']}>
                 {
                   statusLogin &&
                   <span>Войти в аккаунт</span>
@@ -134,10 +135,10 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
 
               {
                 !statusLogin &&
-                <label className='input-container'>
-                  <span className='input-name'>Никнейм</span>
+                <label className={styles['input-container']}>
+                  <span className={styles['input-name']}>Никнейм</span>
                   <input
-                    className='input-input'
+                    className={styles['input-input']}
                     type="text"
                     maxLength={50}
                     placeholder='например, example192'
@@ -147,10 +148,10 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
                 </label>
               }
 
-              <label className='input-container'>
-                <span className='input-name'>Электронная почта</span>
+              <label className={styles['input-container']}>
+                <span className={styles['input-name']}>Электронная почта</span>
                 <input
-                  className='input-input'
+                  className={styles['input-input']}
                   type="text"
                   maxLength={50}
                   placeholder='например, ivanov@axample.com'
@@ -159,10 +160,10 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
                 />
               </label>
 
-              <label className='input-container'>
-                <span className='input-name'>Пароль</span>
+              <label className={styles['input-container']}>
+                <span className={styles['input-name']}>Пароль</span>
                 <input
-                  className='input-input'
+                  className={styles['input-input']}
                   type="password"
                   maxLength={50}
                   placeholder='например, **********'
@@ -173,20 +174,20 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
 
                 {
                   statusLogin &&
-                  <div className='button-container'>
+                  <div className={styles['button-container']}>
                     <button
-                      className='button'
+                      className={styles['button']}
                       onClick={handleLoginButtonClick}
                     >
                       Войти
                     </button>
 
-                    <p className='button-error'>{loginError}</p>
+                    <p className={styles['button-error']}>{loginError}</p>
 
-                    <p className='button-text'>Нет аккаунта?</p>
+                    <p className={styles['button-text']}>Нет аккаунта?</p>
 
                     <button
-                      className='button button-support'
+                      className={styles['button button-support']}
                       onClick={handleChangeStatusClick}
                     >
                       Зарегестрируйтесь
@@ -196,20 +197,20 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
 
                 {
                   !statusLogin &&
-                  <div className='button-container'>
+                  <div className={styles['button-container']}>
                     <button
-                      className='button'
+                      className={styles['button']}
                       onClick={handleRegisterButtonClick}
                     >
                       Зарегестрироваться
                     </button>
 
-                    <p className='button-error'>{loginError}</p>
+                    <p className={styles['button-error']}>{loginError}</p>
 
-                    <p className='button-text'>Есть аккаунт?</p>
+                    <p className={styles['button-text']}>Есть аккаунт?</p>
 
                     <button
-                      className='button button-support'
+                      className={styles['button button-support']}
                       onClick={handleChangeStatusClick}
                     >
                       Войдите в аккаунт
@@ -219,15 +220,15 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
 
             </div>
 
-            <div className="form">
-              <div className='title-container'>
+            <div className={styles['form']}>
+              <div className={styles['title-container']}>
                 Играть как гость
               </div>
 
-              <label className='input-container'>
-                <span className='input-name'>Имя пользователя</span>
+              <label className={styles['input-container']}>
+                <span className={styles['input-name']}>Имя пользователя</span>
                 <input
-                  className='input-input'
+                  className={styles['input-input']}
                   type="text"
                   maxLength={50}
                   placeholder='например, example192'
@@ -236,7 +237,7 @@ export default function RegisterPage({authorizationStatus}: RegisterPageProps) {
                 />
               </label>
 
-              <div className='button-container'>
+              <div className={styles['button-container']}>
                 <button
                   className='button'
                   onClick={handleGuestLoginButtonClick}

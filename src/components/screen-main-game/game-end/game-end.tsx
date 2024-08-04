@@ -1,5 +1,5 @@
 
-import './game-end.scss';
+import styles from './game-end.module.scss';
 
 
 type GameEndProps = {
@@ -9,10 +9,10 @@ type GameEndProps = {
 
 export default function GameEnd({results}: GameEndProps) {
   return (
-    <div>
-      <p>Игра завершена</p>
+    <div className={styles['']}>
+      <p className={styles['']}>Игра завершена</p>
       <ul>
-        <p>Результаты</p>
+        <p className={styles['']}>Результаты</p>
         {
           results.map((result, i) => (
             <li key={String(result[0]) + i}>

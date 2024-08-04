@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
-import './screen-enter-game.scss';
+import styles from './screen-enter-game.module.scss';
 import { ScreenState, SocketHandlers } from '../../config';
 import GameRoomItem from './game-room-item/game-room-item';
 import { useEffect, useState } from 'react';
@@ -51,19 +51,19 @@ export default function ScreenEnterGame({socket, setScreenState, userName}: Scre
 
 
   return (
-    <div className='screen'>
-      <div className='title-select'>
+    <div className={styles['screen']}>
+      <div className={styles['title-select']}>
         <span>Выберите комнату</span>
       </div>
 
       <button
-        className='back-btn'
+        className={styles['back-btn']}
         onClick={handleBackButtonClick}
       >
         Назад
       </button>
 
-      <ul className='room-list'>
+      <ul className={styles['room-list']}>
         {
           games.map((game) => (
             <li key={game.id}>
