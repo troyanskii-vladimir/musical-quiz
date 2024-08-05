@@ -35,3 +35,22 @@ export type Question = {
   imageUrl: string;
   answers: string[];
 };
+
+export type QuestionResultData = {
+  song: string;
+  artist: string;
+  imageUrl: string;
+  correctAnswer: string,
+};
+
+export type QuestionAnswersData = {
+  answer: string;
+  correct: boolean;
+  score: number;
+  playerName: string;
+}
+
+export type GameAnswersData = {
+  score: number;
+  playerName: string;
+}

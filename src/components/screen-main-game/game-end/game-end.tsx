@@ -1,9 +1,10 @@
 
+import { GameAnswersData } from '../../../types/game-data';
 import styles from './game-end.module.scss';
 
 
 type GameEndProps = {
-  results: (string | number)[][],
+  results: [string, GameAnswersData][],
 }
 
 
@@ -14,9 +15,9 @@ export default function GameEnd({results}: GameEndProps) {
       <ul>
         <p className={styles['']}>Результаты</p>
         {
-          results.map((result, i) => (
-            <li key={String(result[0]) + i}>
-              <p>{result[0]}: {result[1]} очков</p>
+          results.map((result) => (
+            <li key={result[0]}>
+              <p>{result[1].playerName}: {result[1].score} очков</p>
             </li>
           ))
         }

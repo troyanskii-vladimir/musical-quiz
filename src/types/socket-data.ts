@@ -1,4 +1,4 @@
-import { GameData, MinGameData, PlayerData } from './game-data';
+import { GameAnswersData, GameData, MinGameData, PlayerData, QuestionAnswersData, QuestionResultData } from './game-data';
 
 
 export type SocketCreateGameRes = {
@@ -27,7 +27,12 @@ export type SocketLeaveGameRes = {
   status: number,
 }
 
+export type SocketEndRoundRes = {
+  answers: [string, QuestionAnswersData][],
+  question: QuestionResultData,
+}
+
 export type SocketEndGameRes = {
   players: PlayerData[],
-  score: (string | number)[][],
+  score: [string, GameAnswersData][],
 }

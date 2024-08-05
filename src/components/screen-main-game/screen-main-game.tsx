@@ -8,7 +8,7 @@ import {
   SocketHandlersOn,
 } from '../../config';
 import { useEffect, useState } from 'react';
-import { GameData, PlayerData, Question } from '../../types/game-data';
+import { GameAnswersData, GameData, PlayerData, Question } from '../../types/game-data';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getGameData } from '../../store/game/game.selectors';
 import { SocketEndGameRes, SocketLeaveGameRes } from '../../types/socket-data';
@@ -34,7 +34,7 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
   //Прочие данные игры
   const [players, setPlayers] = useState<PlayerData[]>(game.players);
   const [question, setQuestion] = useState<Question>({} as Question);
-  const [results, setResults] = useState<(string | number)[][]>([]);
+  const [results, setResults] = useState<[string, GameAnswersData][]>([]);
 
   //Стейт компонента
   const [gameStatus, setGameStatus] = useState<GameStatus>(game.gameStatus as GameStatus);
@@ -82,10 +82,6 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       setGameStatus(GameStatus.WaitingForAnswer);
     });
 
-    socket.on(SocketHandlersOn.EndRound, (data) => {
-      console.log(data);
-    });
-
     socket.on(SocketHandlersOn.EndGame, (gameResults: SocketEndGameRes) => {
       setGameStatus(GameStatus.GameEnd);
       setResults(gameResults.score);
@@ -98,7 +94,6 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       socket.off(SocketHandlersOn.PlayerNotReady);
       socket.off(SocketHandlersOn.GetReady);
       socket.off(SocketHandlersOn.ReadyRound);
-      socket.off(SocketHandlersOn.EndRound);
       socket.off(SocketHandlersOn.EndGame);
     };
   }, [socket, dispatch]);
