@@ -38,6 +38,20 @@ export const checkAuthAction = createAsyncThunk<AuthResponse, undefined, {
 )
 
 
+// export const getAvailiablePacks = createAsyncThunk<PackData[], undefined, {
+//   dispatch: AppDispatch,
+//   state: State,
+//   extra: AxiosInstance,
+// }>(
+//   'getAvailiablePacks',
+//   async(_arg, {extra: api}) => {
+//     const {data} = await api.get<PackData[]>(ApiRoute.AvailiablePacks);
+
+//     return data;
+//   }
+// )
+
+
 export const registerAction = createAsyncThunk<AuthResponse, Partial<AuthData>, {
   dispatch: AppDispatch,
   state: State,

@@ -79,6 +79,8 @@ export enum ApiRoute {
   Refresh = 'api/refresh',
   GuestRefresh = 'api/guestrefresh',
   Users = 'api/users',
+
+  AvailiablePacks = 'api/availiablepacks'
 }
 
 export const AUTH_TOKEN_NAME = 'musical-quiz-token';

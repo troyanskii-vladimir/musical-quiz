@@ -1,12 +1,14 @@
 import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
 import styles from './screen-create-game.module.scss';
-import { ScreenState, SocketHandlers } from '../../config';
-import { ChangeEvent, useState } from 'react';
+import { ApiRoute, BACKEND_URL, ScreenState, SocketHandlers } from '../../config';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { setGameData, setPlayerId } from '../../store/game/game.slice';
 import { SocketCreateGameRes } from '../../types/socket-data';
 import { UserData } from '../../types/user-data';
+import { PackData } from '../../types/pack-data';
+import axios from 'axios';
 
 type ScreenCreateGameProps = {
   socket: Socket;
@@ -21,10 +23,23 @@ export default function ScreenCreateGame({
 }: ScreenCreateGameProps) {
   const dispatch = useAppDispatch();
 
+  //Данные с сервера
+  const [avaliablePacks, setAvaliablePacks] = useState<PackData[]>([]);
+
+  //Данные стейта компонента
+  const [packChecked, setPackChecked] = useState<PackData>({} as PackData)
   const [roomName, setRoomName] = useState<string>('');
   const [privateRoom, setPrivateRoom] = useState<boolean>(false);
   const [roomPassword, setRoomPassword] = useState<string>('');
   const [roomPlayers, setRoomPlayers] = useState<number>(4);
+
+
+  useEffect(() => {
+    axios.get<PackData[]>(BACKEND_URL + ApiRoute.AvailiablePacks).then((res) => {
+      setAvaliablePacks(res.data);
+    });
+  }, [])
+
 
   const handleBackButtonClick = () => {
     setScreenState(ScreenState.SelectMode);
@@ -49,6 +64,7 @@ export default function ScreenCreateGame({
   const handleCreateButtonClick = () => {
     const data = {
       gameData: {
+        playlistUrl: packChecked.trackListUrl,
         name: roomName,
         maxPlayers: roomPlayers,
         isPrivate: privateRoom,
@@ -83,6 +99,28 @@ export default function ScreenCreateGame({
       <button className={styles["back-btn"]} onClick={handleBackButtonClick}>
         Назад
       </button>
+
+      <div className={styles['packs']}>
+        <span className={styles['packs-title']}>Выбери пак для игры</span>
+        <ul className={styles['packs-list']}>
+          {
+            avaliablePacks.map((pack) => (
+              <li key={pack.name} className={`${styles['pack-item']} ${packChecked.name === pack.name ? styles['pack-checked'] : ''}`}>
+                <label className={styles['pack-container']}>
+                  <img className={styles['pack-img']} src={pack.pictureUrl} alt={pack.name} />
+                  <span className={styles['pack-name']}>{pack.name}</span>
+                  <input
+                    className={styles['pack-input']}
+                    type='radio'
+                    name='radio'
+                    onChange={() => setPackChecked(pack)}
+                  />
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
 
       <label className={styles["input-container"]}>
         <span className={styles["input-name"]}>Название комнаты</span>
