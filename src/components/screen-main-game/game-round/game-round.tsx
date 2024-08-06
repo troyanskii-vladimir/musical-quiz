@@ -13,6 +13,7 @@ type GameRoundProps = {
 };
 
 export default function GameRound({ socket, question, gameId }: GameRoundProps) {
+  //Стейт компонента
   const [roundTime, setRoundTime] = useState<number>(0);
   const [isAnswered, setIsAnswered] = useState<boolean>(false);
 
@@ -20,8 +21,6 @@ export default function GameRound({ socket, question, gameId }: GameRoundProps) 
   const [isResultReady, setIsResultReady] = useState<boolean>(false);
   const [questionResult, setQuestionResult] = useState<QuestionResultData>({} as QuestionResultData);
   const [answersResult, setAnswersResult] = useState<[string, QuestionAnswersData][]>([]);
-
-  console.log(isAnswered);
 
 
   useEffect(() => {
@@ -69,7 +68,7 @@ export default function GameRound({ socket, question, gameId }: GameRoundProps) 
         !isResultReady &&
         <ul className={styles['answer-list']}>
           {
-            question.answers.map((answer, i) => (
+            question?.answers?.map((answer, i) => (
               <li className={styles['answer-item']} key={answer + i}>
                 <GameQuestion answer={answer} isAnswered={isAnswered} onAnswerClick={onAnswerClick} />
               </li>
@@ -82,7 +81,7 @@ export default function GameRound({ socket, question, gameId }: GameRoundProps) 
         isResultReady &&
           <ul className={styles['answer-list']}>
           {
-            question.answers.map((answer, i) => (
+            question?.answers?.map((answer, i) => (
               <li className={styles['answer-item']} key={answer + i}>
                 <GameQuestion answer={answer} isAnswered={isAnswered} correctAnswer={questionResult.correctAnswer} />
               </li>
