@@ -3,3 +3,8 @@ export type PackData = {
   pictureUrl: string,
   trackListUrl: string,
 }
+
+export type AvailiablePacksData = {
+  artists: PackData[],
+  playlists: PackData[],
+}

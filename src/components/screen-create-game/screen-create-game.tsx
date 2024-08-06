@@ -1,14 +1,15 @@
 import { Socket } from 'socket.io-client';
 import '../../../styles/container.scss';
 import styles from './screen-create-game.module.scss';
-import { ApiRoute, BACKEND_URL, ScreenState, SocketHandlers } from '../../config';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ScreenState, SocketHandlers } from '../../config';
+import { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { setGameData, setPlayerId } from '../../store/game/game.slice';
 import { SocketCreateGameRes } from '../../types/socket-data';
 import { UserData } from '../../types/user-data';
 import { PackData } from '../../types/pack-data';
-import axios from 'axios';
+import SelectPack from './select-pack/select-pack';
+
 
 type ScreenCreateGameProps = {
   socket: Socket;
@@ -23,22 +24,15 @@ export default function ScreenCreateGame({
 }: ScreenCreateGameProps) {
   const dispatch = useAppDispatch();
 
-  //Данные с сервера
-  const [avaliablePacks, setAvaliablePacks] = useState<PackData[]>([]);
-
   //Данные стейта компонента
+  const [isPackDataOpen, setIsPackDataOpen] = useState<boolean>(false);
   const [packChecked, setPackChecked] = useState<PackData>({} as PackData)
+  const [isGameArtist, setIsGameArtist] = useState<boolean>(false);
   const [roomName, setRoomName] = useState<string>('');
   const [privateRoom, setPrivateRoom] = useState<boolean>(false);
   const [roomPassword, setRoomPassword] = useState<string>('');
   const [roomPlayers, setRoomPlayers] = useState<number>(4);
 
-
-  useEffect(() => {
-    axios.get<PackData[]>(BACKEND_URL + ApiRoute.AvailiablePacks).then((res) => {
-      setAvaliablePacks(res.data);
-    });
-  }, [])
 
 
   const handleBackButtonClick = () => {
@@ -61,10 +55,15 @@ export default function ScreenCreateGame({
     setRoomPlayers(Number(evt.target.value));
   };
 
+  const handleChangePacksClick = () => {
+    setIsPackDataOpen(true);
+  }
+
   const handleCreateButtonClick = () => {
     const data = {
       gameData: {
         playlistUrl: packChecked.trackListUrl,
+        gameArtist: isGameArtist,
         name: roomName,
         maxPlayers: roomPlayers,
         isPrivate: privateRoom,
@@ -101,26 +100,23 @@ export default function ScreenCreateGame({
       </button>
 
       <div className={styles['packs']}>
-        <span className={styles['packs-title']}>Выбери пак для игры</span>
-        <ul className={styles['packs-list']}>
-          {
-            avaliablePacks.map((pack) => (
-              <li key={pack.name} className={`${styles['pack-item']} ${packChecked.name === pack.name ? styles['pack-checked'] : ''}`}>
-                <label className={styles['pack-container']}>
-                  <img className={styles['pack-img']} src={pack.pictureUrl} alt={pack.name} />
-                  <span className={styles['pack-name']}>{pack.name}</span>
-                  <input
-                    className={styles['pack-input']}
-                    type='radio'
-                    name='radio'
-                    onChange={() => setPackChecked(pack)}
-                  />
-                </label>
-              </li>
-            ))
-          }
-        </ul>
+        <div className={styles['pack-data']}>
+          <img className={styles['pack-img']} src={packChecked.pictureUrl} alt={packChecked.name} />
+          <div className={styles['pack-name']}>{packChecked.name}</div>
+        </div>
+
+        <button
+          className={styles['pack-title']}
+          onClick={handleChangePacksClick}
+        >
+          Выберите пак для игры
+        </button>
       </div>
+
+      {
+        isPackDataOpen &&
+        <SelectPack packChecked={packChecked} setPackChecked={setPackChecked} setIsPackDataOpen={setIsPackDataOpen} setIsGameArtist={setIsGameArtist} />
+      }
 
       <label className={styles["input-container"]}>
         <span className={styles["input-name"]}>Название комнаты</span>

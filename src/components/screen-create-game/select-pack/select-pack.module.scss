@@ -1,0 +1,107 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+@import '../../../../styles/normalize.css';
+
+
+.packs {
+  position: absolute;
+  width: 100%;
+  height: calc(100%);
+  top: 0;
+  z-index: 2;
+
+  padding: 30px;
+
+  background-color: white;
+}
+
+.pack-info {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  display: block;
+
+  padding: 10px;
+
+  border: 2px solid $color-default-violet;
+  border-radius: 15px;
+
+  &:hover {
+    background-color: rgba($color-default-violet, 0.1);
+  }
+
+  &:active {
+    background-color: rgba($color-default-violet, 0.3);
+  }
+}
+
+.title {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.packs-title {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 22px;
+}
+
+.packs-list {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.pack-item {
+  position: relative;
+  display: block;
+  width: 110px;
+  height: 110px;
+
+  margin-right: 10px;
+
+  border: 5px solid #999;
+}
+
+.pack-checked {
+  border: 5px solid greenyellow;
+}
+
+
+.pack-img {
+  display: block;
+  width: 100px;
+  height: 100px;
+}
+
+.pack-name {
+  position: absolute;
+  display: block;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  overflow: hidden;
+
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  color: red;
+}
+
+.pack-input {
+  display: none;
+}
