@@ -1,29 +1,18 @@
-import { useEffect, useState } from 'react';
 import styles from './select-pack.module.scss';
-import axios from 'axios';
 import { AvailiablePacksData, PackData } from '../../../types/pack-data';
-import { ApiRoute, BACKEND_URL } from '../../../config';
+import { PackCategory } from '../../../config';
+
 
 type SelectPackProps = {
   packChecked: PackData,
   setPackChecked: (arg: PackData) => void,
   setIsPackDataOpen: (arg: boolean) => void,
-  setIsGameArtist: (arg: boolean) => void,
+  setPackCategory: (arg: PackCategory) => void,
+  avaliablePacks: AvailiablePacksData,
 }
 
 
-export default function SelectPack({packChecked, setPackChecked, setIsPackDataOpen, setIsGameArtist}: SelectPackProps) {
-  //Данные с сервера
-  const [avaliablePacks, setAvaliablePacks] = useState<AvailiablePacksData>({} as AvailiablePacksData);
-
-
-  useEffect(() => {
-    axios.get<AvailiablePacksData>(BACKEND_URL + ApiRoute.AvailiablePacks).then((res) => {
-      setAvaliablePacks(res.data);
-    });
-  }, [])
-
-
+export default function SelectPack({packChecked, setPackChecked, setIsPackDataOpen, setPackCategory, avaliablePacks}: SelectPackProps) {
   const handleBackButtonClick = () => {
     setIsPackDataOpen(false);
   };
@@ -70,7 +59,8 @@ export default function SelectPack({packChecked, setPackChecked, setIsPackDataOp
                   name='radio'
                   onChange={() => {
                     setPackChecked(pack);
-                    setIsGameArtist(false);
+                    setPackCategory(PackCategory.Playlist);
+                    setIsPackDataOpen(false);
                   }}
                 />
               </label>
@@ -93,7 +83,8 @@ export default function SelectPack({packChecked, setPackChecked, setIsPackDataOp
                   name='radio'
                   onChange={() => {
                     setPackChecked(pack);
-                    setIsGameArtist(true);
+                    setPackCategory(PackCategory.Artist);
+                    setIsPackDataOpen(false);
                   }}
                 />
               </label>

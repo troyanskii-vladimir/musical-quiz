@@ -27,6 +27,12 @@ export enum GameStatus {
   GameEnd = 'game-end',
 }
 
+export enum PackCategory {
+  Artist = 'artist',
+  Playlist = 'playlist',
+}
+
+
 export enum SocketHandlers {
   getGameList = 'get-game-list',
   createGame = 'create-game',
