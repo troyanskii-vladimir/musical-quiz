@@ -2,9 +2,6 @@ import { Socket } from 'socket.io-client';
 import { GameAnswersData, PlayerData } from '../../../types/game-data';
 import styles from './game-end.module.scss';
 import { GameStatus, SocketHandlersEmit } from '../../../config';
-import { SocketCreateGameRes } from '../../../types/socket-data';
-import { useAppDispatch } from '../../../hooks';
-import { setGameData } from '../../../store/game/game.slice';
 
 
 type GameEndProps = {
@@ -16,21 +13,9 @@ type GameEndProps = {
 }
 
 
-export default function GameEnd({socket, results, gameId, setGameStatus, setPlayers}: GameEndProps) {
-  const dispatch = useAppDispatch();
-
+export default function GameEnd({socket, results, gameId}: GameEndProps) {
   const handleRestartButtonClick = () => {
-    socket.emit(SocketHandlersEmit.Restart, {gameId: gameId}, (response: SocketCreateGameRes) => {
-      response as SocketCreateGameRes;
-
-      if (response.status === 401) {
-        dispatch(setGameData(response.gameData));
-        setGameStatus(GameStatus.WaitingForReady);
-        setPlayers(response.gameData.players);
-      } else {
-        console.log('Ошибка рестарта игры');
-      }
-    })
+    socket.emit(SocketHandlersEmit.Restart, {gameId: gameId})
   }
 
   return (

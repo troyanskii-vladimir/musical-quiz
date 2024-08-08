@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { SocketHandlersEmit, SocketHandlersOn } from '../../../config';
 import { Question, QuestionAnswersData, QuestionResultData } from '../../../types/game-data';
@@ -14,8 +14,10 @@ type GameRoundProps = {
 
 export default function GameRound({ socket, question, gameId }: GameRoundProps) {
   //Стейт компонента
-  const [roundTime, setRoundTime] = useState<number>(0);
+  const [roundTime, setRoundTime] = useState<number>(20);
   const [isAnswered, setIsAnswered] = useState<boolean>(false);
+
+  // const audioRef = useRef<HTMLAudioElement>(null);
 
   //Стейт ответа
   const [isResultReady, setIsResultReady] = useState<boolean>(false);
@@ -41,6 +43,24 @@ export default function GameRound({ socket, question, gameId }: GameRoundProps) 
   }, [socket]);
 
 
+  // function detectBrowser() {
+  //   const userAgent = navigator.userAgent.toLowerCase();
+  //   console.log(userAgent)
+
+  //   if (userAgent.indexOf('safari')) {
+  //       return 'safari';
+  //   } else if (userAgent.indexOf('chrome')) {
+  //       return 'chrome';
+  //   } else {
+  //       return 'Unknown';
+  //   }
+  // }
+
+  // console.log(detectBrowser())
+
+
+
+
   const onAnswerClick = (answer: string) => {
     const data = {
       gameId,
@@ -55,7 +75,10 @@ export default function GameRound({ socket, question, gameId }: GameRoundProps) 
 
   return (
     <div className={styles['cont-5']}>
-      <audio src={question.trackUrl} autoPlay></audio>
+      {/* <audio ref={audioRef} autoPlay controls> */}
+      <audio autoPlay>
+        <source src={question.trackUrl} />
+      </audio>
       <div className={styles['counter-5']}>
         <span>{roundTime}</span>
       </div>

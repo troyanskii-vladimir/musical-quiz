@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { RoomStatus, ScreenState, SocketHandlers } from '../../../config';
+import { GameStatus, RoomStatus, ScreenState, SocketHandlers } from '../../../config';
 
 import styles from './game-room-item.module.scss';
 import { MinGameData } from '../../../types/game-data';
@@ -74,9 +74,9 @@ export default function GameRoomItem({socket, game, setScreenState, userName}: G
       className={`${styles['room-item']} ${game.isPrivate ? styles['locked'] : ''} ${isPasswordOpen ? styles['password-open'] : ''}`}
       onClick={handleRoomItemClick}
     >
-      <div className={`${styles['room-status']} ${game.gameStatus === RoomStatus.InGame ? styles['ingame'] : styles['waiting']}`}>
+      <div className={`${styles['room-status']} ${game.gameStatus !== GameStatus.WaitingForReady ? styles['ingame'] : styles['waiting']}`}>
         {
-          game.gameStatus === RoomStatus.InGame ? 'Идет игра' : 'Ожидание игроков'
+          game.gameStatus !== GameStatus.WaitingForReady ? 'Идет игра' : 'Ожидание игроков'
         }
       </div>
       {

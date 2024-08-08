@@ -42,6 +42,10 @@ export default function ScreenEnterGame({socket, setScreenState, userName}: Scre
       response as SocketGetGamesRes;
       setGames(response.games);
     });
+
+    return () => {
+      socket.off(SocketHandlers.recieveGameList);
+    }
   }, [socket])
 
 

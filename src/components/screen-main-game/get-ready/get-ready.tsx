@@ -8,7 +8,7 @@ type GetReadyProps = {
 };
 
 export default function GetReady({ socket }: GetReadyProps) {
-  const [lastTime, setLastTime] = useState<number>(5);
+  const [lastTime, setLastTime] = useState<number>(3);
 
   useEffect(() => {
     socket.on(SocketHandlersOn.CountDown, (time: number) => {

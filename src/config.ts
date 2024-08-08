@@ -58,6 +58,8 @@ export enum SocketHandlersOn {
 
   EndRound = 'end-round',
   EndGame = 'end-game',
+
+  Restart = 'restart',
 }
 
 export enum SocketHandlersEmit {

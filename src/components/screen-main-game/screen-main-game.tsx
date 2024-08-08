@@ -73,6 +73,11 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       setPlayers(playersData);
     });
 
+    socket.on(SocketHandlersOn.Restart, (gameData: GameData) => {
+      setGameStatus(GameStatus.WaitingForReady);
+      setPlayers(gameData.players);
+    });
+
     socket.on(SocketHandlersOn.GetReady, () => {
       setGameStatus(GameStatus.getReady);
     });
@@ -92,6 +97,7 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
       socket.off(SocketHandlersOn.PlayerLeave);
       socket.off(SocketHandlersOn.PlayerReady);
       socket.off(SocketHandlersOn.PlayerNotReady);
+      socket.off(SocketHandlersOn.Restart);
       socket.off(SocketHandlersOn.GetReady);
       socket.off(SocketHandlersOn.ReadyRound);
       socket.off(SocketHandlersOn.EndGame);

@@ -79,7 +79,7 @@ export default function ScreenCreateGame({
       gameData: {
         packCategory: packCategory,
         playlistUrl: packChecked.trackListUrl,
-        name: roomName,
+        name: roomName ? roomName : 'Игра без названия',
         maxPlayers: roomPlayers,
         rounds: rounds,
         isPrivate: privateRoom,
