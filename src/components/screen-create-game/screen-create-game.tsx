@@ -195,7 +195,7 @@ export default function ScreenCreateGame({
         <input
           className={styles["range-input"]}
           type="range"
-          min={3}
+          min={1}
           max={10}
           value={rounds}
           onChange={handleRoundsChange}

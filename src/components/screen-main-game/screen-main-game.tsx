@@ -131,7 +131,7 @@ export default function ScreenMainGame({socket, setScreenState}: ScreenMainGameP
 
       {
         gameStatus === GameStatus.GameEnd &&
-        <GameEnd results={results} />
+        <GameEnd socket={socket} results={results} gameId={game.id} setGameStatus={setGameStatus} setPlayers={setPlayers} />
       }
 
     </div>

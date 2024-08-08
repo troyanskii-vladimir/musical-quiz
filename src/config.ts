@@ -65,6 +65,7 @@ export enum SocketHandlersEmit {
   PlayerNotReadyRound = 'player-not-ready-round',
 
   Answer = 'answer',
+  Restart = 'restart',
 }
 
 export enum RoomStatus {
